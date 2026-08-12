@@ -1,0 +1,23 @@
+# Masters de impresión (~99 MB). No se enlazan desde ninguna página del sitio:
+# son el material de origen del que se derivan las versiones web de 1600 y 720 px.
+# Quedan solo en local — conviene respaldarlos aparte (Drive, disco externo).
+public/img/proyectos/_originales/
+public/img/galeria/_originales/
+
+# Imagen del PDF que ya era un placeholder del propio dossier
+public/img/_revisar/
+
+# Sistema operativo
+Thumbs.db
+ehthumbs.db
+Desktop.ini
+.DS_Store
+
+# Editores
+.vscode/
+.idea/
+*.swp
+
+# Dependencias (por si más adelante se agrega build)
+node_modules/
+.vercel

@@ -1,0 +1,786 @@
+[
+ {
+  "page": 1,
+  "slug": "cover",
+  "file": "cover-01.jpg",
+  "w": 1200,
+  "h": 1697,
+  "bbox": [
+   0,
+   0,
+   1684,
+   2384
+  ],
+  "kb": 345
+ },
+ {
+  "page": 2,
+  "slug": "indice",
+  "file": "indice-01.png",
+  "w": 700,
+  "h": 560,
+  "bbox": [
+   992,
+   0,
+   1686,
+   554
+  ],
+  "kb": 167
+ },
+ {
+  "page": 2,
+  "slug": "indice",
+  "file": "indice-02.png",
+  "w": 1438,
+  "h": 560,
+  "bbox": [
+   122,
+   358,
+   1529,
+   905
+  ],
+  "kb": 4
+ },
+ {
+  "page": 2,
+  "slug": "indice",
+  "file": "indice-03.png",
+  "w": 623,
+  "h": 242,
+  "bbox": [
+   122,
+   748,
+   571,
+   923
+  ],
+  "kb": 1
+ },
+ {
+  "page": 2,
+  "slug": "indice",
+  "file": "indice-04.png",
+  "w": 622,
+  "h": 242,
+  "bbox": [
+   1121,
+   748,
+   1569,
+   923
+  ],
+  "kb": 1
+ },
+ {
+  "page": 3,
+  "slug": "portal-la-riviera",
+  "file": "portal-la-riviera-01.jpg",
+  "w": 2360,
+  "h": 1285,
+  "bbox": [
+   122,
+   306,
+   1563,
+   1090
+  ],
+  "kb": 417
+ },
+ {
+  "page": 3,
+  "slug": "portal-la-riviera",
+  "file": "portal-la-riviera-02.jpg",
+  "w": 1029,
+  "h": 847,
+  "bbox": [
+   122,
+   1121,
+   581,
+   1497
+  ],
+  "kb": 44
+ },
+ {
+  "page": 3,
+  "slug": "portal-la-riviera",
+  "file": "portal-la-riviera-03.jpg",
+  "w": 855,
+  "h": 703,
+  "bbox": [
+   613,
+   1121,
+   1072,
+   1497
+  ],
+  "kb": 90
+ },
+ {
+  "page": 3,
+  "slug": "portal-la-riviera",
+  "file": "portal-la-riviera-04.jpg",
+  "w": 1081,
+  "h": 889,
+  "bbox": [
+   1104,
+   1121,
+   1563,
+   1497
+  ],
+  "kb": 103
+ },
+ {
+  "page": 3,
+  "slug": "portal-la-riviera",
+  "file": "portal-la-riviera-05.png",
+  "w": 1302,
+  "h": 507,
+  "bbox": [
+   122,
+   1498,
+   1060,
+   1863
+  ],
+  "kb": 4
+ },
+ {
+  "page": 4,
+  "slug": "cabanas-ataco",
+  "file": "cabanas-ataco-01.jpg",
+  "w": 2138,
+  "h": 1165,
+  "bbox": [
+   122,
+   306,
+   1563,
+   1090
+  ],
+  "kb": 627
+ },
+ {
+  "page": 4,
+  "slug": "cabanas-ataco",
+  "file": "cabanas-ataco-02.jpg",
+  "w": 1061,
+  "h": 872,
+  "bbox": [
+   122,
+   1121,
+   581,
+   1497
+  ],
+  "kb": 141
+ },
+ {
+  "page": 4,
+  "slug": "cabanas-ataco",
+  "file": "cabanas-ataco-03.jpg",
+  "w": 1161,
+  "h": 954,
+  "bbox": [
+   613,
+   1121,
+   1072,
+   1497
+  ],
+  "kb": 151
+ },
+ {
+  "page": 4,
+  "slug": "cabanas-ataco",
+  "file": "cabanas-ataco-04.jpg",
+  "w": 855,
+  "h": 703,
+  "bbox": [
+   1104,
+   1121,
+   1563,
+   1497
+  ],
+  "kb": 105
+ },
+ {
+  "page": 5,
+  "slug": "la-florida",
+  "file": "la-florida-01.jpg",
+  "w": 2289,
+  "h": 1244,
+  "bbox": [
+   122,
+   306,
+   1563,
+   1090
+  ],
+  "kb": 210
+ },
+ {
+  "page": 5,
+  "slug": "la-florida",
+  "file": "la-florida-02.jpg",
+  "w": 1152,
+  "h": 947,
+  "bbox": [
+   122,
+   1121,
+   581,
+   1497
+  ],
+  "kb": 57
+ },
+ {
+  "page": 5,
+  "slug": "la-florida",
+  "file": "la-florida-03.jpg",
+  "w": 1151,
+  "h": 944,
+  "bbox": [
+   613,
+   1121,
+   1072,
+   1497
+  ],
+  "kb": 75
+ },
+ {
+  "page": 5,
+  "slug": "la-florida",
+  "file": "la-florida-04.jpg",
+  "w": 1087,
+  "h": 894,
+  "bbox": [
+   1104,
+   1121,
+   1563,
+   1497
+  ],
+  "kb": 72
+ },
+ {
+  "page": 6,
+  "slug": "compassion",
+  "file": "compassion-01.jpg",
+  "w": 2541,
+  "h": 1385,
+  "bbox": [
+   122,
+   306,
+   1563,
+   1090
+  ],
+  "kb": 423
+ },
+ {
+  "page": 6,
+  "slug": "compassion",
+  "file": "compassion-02.jpg",
+  "w": 1239,
+  "h": 1019,
+  "bbox": [
+   122,
+   1121,
+   581,
+   1497
+  ],
+  "kb": 129
+ },
+ {
+  "page": 6,
+  "slug": "compassion",
+  "file": "compassion-03.jpg",
+  "w": 713,
+  "h": 586,
+  "bbox": [
+   613,
+   1121,
+   1072,
+   1497
+  ],
+  "kb": 84
+ },
+ {
+  "page": 6,
+  "slug": "compassion",
+  "file": "compassion-04.jpg",
+  "w": 896,
+  "h": 737,
+  "bbox": [
+   1104,
+   1121,
+   1563,
+   1497
+  ],
+  "kb": 121
+ },
+ {
+  "page": 7,
+  "slug": "ila-studio",
+  "file": "ila-studio-01.jpg",
+  "w": 2474,
+  "h": 1347,
+  "bbox": [
+   122,
+   306,
+   1563,
+   1090
+  ],
+  "kb": 523
+ },
+ {
+  "page": 7,
+  "slug": "ila-studio",
+  "file": "ila-studio-02.jpg",
+  "w": 848,
+  "h": 698,
+  "bbox": [
+   122,
+   1121,
+   581,
+   1497
+  ],
+  "kb": 52
+ },
+ {
+  "page": 7,
+  "slug": "ila-studio",
+  "file": "ila-studio-03.jpg",
+  "w": 880,
+  "h": 723,
+  "bbox": [
+   613,
+   1121,
+   1072,
+   1497
+  ],
+  "kb": 94
+ },
+ {
+  "page": 7,
+  "slug": "ila-studio",
+  "file": "ila-studio-04.jpg",
+  "w": 926,
+  "h": 762,
+  "bbox": [
+   1104,
+   1121,
+   1563,
+   1497
+  ],
+  "kb": 124
+ },
+ {
+  "page": 8,
+  "slug": "cortinas-tuz",
+  "file": "cortinas-tuz-01.jpg",
+  "w": 2477,
+  "h": 1348,
+  "bbox": [
+   122,
+   306,
+   1563,
+   1090
+  ],
+  "kb": 505
+ },
+ {
+  "page": 8,
+  "slug": "cortinas-tuz",
+  "file": "cortinas-tuz-02.jpg",
+  "w": 1239,
+  "h": 1019,
+  "bbox": [
+   122,
+   1121,
+   581,
+   1497
+  ],
+  "kb": 199
+ },
+ {
+  "page": 8,
+  "slug": "cortinas-tuz",
+  "file": "cortinas-tuz-03.jpg",
+  "w": 1239,
+  "h": 1019,
+  "bbox": [
+   613,
+   1121,
+   1072,
+   1497
+  ],
+  "kb": 101
+ },
+ {
+  "page": 8,
+  "slug": "cortinas-tuz",
+  "file": "cortinas-tuz-04.jpg",
+  "w": 1239,
+  "h": 1019,
+  "bbox": [
+   1104,
+   1121,
+   1563,
+   1497
+  ],
+  "kb": 127
+ },
+ {
+  "page": 9,
+  "slug": "plaza-espacio",
+  "file": "plaza-espacio-01.jpg",
+  "w": 2371,
+  "h": 1291,
+  "bbox": [
+   122,
+   306,
+   1563,
+   1090
+  ],
+  "kb": 349
+ },
+ {
+  "page": 9,
+  "slug": "plaza-espacio",
+  "file": "plaza-espacio-02.jpg",
+  "w": 955,
+  "h": 785,
+  "bbox": [
+   122,
+   1121,
+   581,
+   1497
+  ],
+  "kb": 123
+ },
+ {
+  "page": 9,
+  "slug": "plaza-espacio",
+  "file": "plaza-espacio-03.jpg",
+  "w": 1145,
+  "h": 941,
+  "bbox": [
+   613,
+   1121,
+   1072,
+   1497
+  ],
+  "kb": 74
+ },
+ {
+  "page": 9,
+  "slug": "plaza-espacio",
+  "file": "plaza-espacio-04.jpg",
+  "w": 1107,
+  "h": 907,
+  "bbox": [
+   1104,
+   1121,
+   1563,
+   1497
+  ],
+  "kb": 128
+ },
+ {
+  "page": 10,
+  "slug": "legion",
+  "file": "legion-01.jpg",
+  "w": 3087,
+  "h": 1681,
+  "bbox": [
+   122,
+   306,
+   1563,
+   1090
+  ],
+  "kb": 619
+ },
+ {
+  "page": 10,
+  "slug": "legion",
+  "file": "legion-02.jpg",
+  "w": 1222,
+  "h": 1005,
+  "bbox": [
+   122,
+   1121,
+   581,
+   1497
+  ],
+  "kb": 186
+ },
+ {
+  "page": 10,
+  "slug": "legion",
+  "file": "legion-03.jpg",
+  "w": 1326,
+  "h": 1090,
+  "bbox": [
+   613,
+   1121,
+   1072,
+   1497
+  ],
+  "kb": 127
+ },
+ {
+  "page": 10,
+  "slug": "legion",
+  "file": "legion-04.jpg",
+  "w": 1400,
+  "h": 1152,
+  "bbox": [
+   1104,
+   1121,
+   1563,
+   1497
+  ],
+  "kb": 224
+ },
+ {
+  "page": 11,
+  "slug": "palmira",
+  "file": "palmira-01.jpg",
+  "w": 2604,
+  "h": 1418,
+  "bbox": [
+   122,
+   306,
+   1563,
+   1090
+  ],
+  "kb": 177
+ },
+ {
+  "page": 11,
+  "slug": "palmira",
+  "file": "palmira-02.jpg",
+  "w": 1202,
+  "h": 987,
+  "bbox": [
+   122,
+   1121,
+   581,
+   1497
+  ],
+  "kb": 107
+ },
+ {
+  "page": 11,
+  "slug": "palmira",
+  "file": "palmira-03.jpg",
+  "w": 1147,
+  "h": 941,
+  "bbox": [
+   613,
+   1121,
+   1072,
+   1497
+  ],
+  "kb": 56
+ },
+ {
+  "page": 11,
+  "slug": "palmira",
+  "file": "palmira-04.jpg",
+  "w": 1172,
+  "h": 964,
+  "bbox": [
+   1104,
+   1121,
+   1563,
+   1497
+  ],
+  "kb": 145
+ },
+ {
+  "page": 12,
+  "slug": "casa-lp",
+  "file": "casa-lp-01.jpg",
+  "w": 2676,
+  "h": 1457,
+  "bbox": [
+   122,
+   306,
+   1563,
+   1090
+  ],
+  "kb": 589
+ },
+ {
+  "page": 12,
+  "slug": "casa-lp",
+  "file": "casa-lp-02.jpg",
+  "w": 1189,
+  "h": 975,
+  "bbox": [
+   122,
+   1121,
+   581,
+   1497
+  ],
+  "kb": 117
+ },
+ {
+  "page": 12,
+  "slug": "casa-lp",
+  "file": "casa-lp-03.jpg",
+  "w": 1105,
+  "h": 909,
+  "bbox": [
+   613,
+   1121,
+   1072,
+   1497
+  ],
+  "kb": 68
+ },
+ {
+  "page": 12,
+  "slug": "casa-lp",
+  "file": "casa-lp-04.jpg",
+  "w": 1111,
+  "h": 912,
+  "bbox": [
+   1104,
+   1121,
+   1563,
+   1497
+  ],
+  "kb": 84
+ },
+ {
+  "page": 13,
+  "slug": "portales-del-bosque",
+  "file": "portales-del-bosque-01.jpg",
+  "w": 1600,
+  "h": 870,
+  "bbox": [
+   122,
+   308,
+   1561,
+   1091
+  ],
+  "kb": 46
+ },
+ {
+  "page": 13,
+  "slug": "portales-del-bosque",
+  "file": "portales-del-bosque-02.jpg",
+  "w": 704,
+  "h": 383,
+  "bbox": [
+   122,
+   320,
+   1561,
+   1083
+  ],
+  "kb": 36
+ },
+ {
+  "page": 13,
+  "slug": "portales-del-bosque",
+  "file": "portales-del-bosque-03.jpg",
+  "w": 704,
+  "h": 581,
+  "bbox": [
+   1104,
+   1126,
+   1562,
+   1504
+  ],
+  "kb": 59
+ },
+ {
+  "page": 13,
+  "slug": "portales-del-bosque",
+  "file": "portales-del-bosque-04.jpg",
+  "w": 704,
+  "h": 581,
+  "bbox": [
+   613,
+   1127,
+   1071,
+   1504
+  ],
+  "kb": 47
+ },
+ {
+  "page": 13,
+  "slug": "portales-del-bosque",
+  "file": "portales-del-bosque-05.jpg",
+  "w": 704,
+  "h": 600,
+  "bbox": [
+   122,
+   1128,
+   580,
+   1505
+  ],
+  "kb": 58
+ },
+ {
+  "page": 14,
+  "slug": "cerro-mar",
+  "file": "cerro-mar-01.jpg",
+  "w": 729,
+  "h": 398,
+  "bbox": [
+   125,
+   308,
+   1561,
+   1091
+  ],
+  "kb": 49
+ },
+ {
+  "page": 14,
+  "slug": "cerro-mar",
+  "file": "cerro-mar-02.jpg",
+  "w": 726,
+  "h": 601,
+  "bbox": [
+   910,
+   1121,
+   1367,
+   1499
+  ],
+  "kb": 55
+ },
+ {
+  "page": 14,
+  "slug": "cerro-mar",
+  "file": "cerro-mar-03.jpg",
+  "w": 726,
+  "h": 594,
+  "bbox": [
+   383,
+   1126,
+   842,
+   1504
+  ],
+  "kb": 48
+ },
+ {
+  "page": 15,
+  "slug": "contacto",
+  "file": "contacto-01.png",
+  "w": 651,
+  "h": 253,
+  "bbox": [
+   1009,
+   1704,
+   1477,
+   1886
+  ],
+  "kb": 1
+ },
+ {
+  "page": 15,
+  "slug": "contacto",
+  "file": "contacto-02.png",
+  "w": 594,
+  "h": 231,
+  "bbox": [
+   387,
+   1712,
+   815,
+   1878
+  ],
+  "kb": 1
+ }
+]

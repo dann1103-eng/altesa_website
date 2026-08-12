@@ -86,15 +86,19 @@
            (fallback ? ' data-fb="' + esc(fallback) + '"' : "") +
            (cls ? ' class="' + cls + '"' : "") + ">";
   }
-  function prodSrc(p) { return p.img ? "img/" + p.img : "img/productos/" + p.id + ".jpg"; }
-  function prodFb(p)  { return "img/placeholder/" + p.cat + ".svg"; }
+  function catDe(id) {
+    return ((window.ALTESA_CAT || {}).categorias || []).filter(function (c) { return c.id === id; })[0] || {};
+  }
+  function prodSrc(p) { return "img/productos/" + (p.img || p.id + ".jpg"); }
+  function prodFb(p)  { return "img/placeholder/" + (catDe(p.cat).ph || "control") + ".svg"; }
   // Bloques clave (categorías, mosaico): cargar de inmediato, no en diferido.
   function eager(html) { return html.split('loading="lazy"').join('loading="eager"'); }
   // Miniatura 720px para rejillas y listas; la original 1600px queda para
   // hero, ficha y lightbox. Las fotos de producto del cliente no tienen thumb.
   function th(src) {
-    return src.indexOf("img/proyectos/") === 0
-      ? src.replace("img/proyectos/", "img/proyectos/th/") : src;
+    if (src.indexOf("img/proyectos/") === 0) return src.replace("img/proyectos/", "img/proyectos/th/");
+    if (src.indexOf("img/productos/") === 0) return src.replace("img/productos/", "img/productos/th/");
+    return src;
   }
 
   /* ---- Header / Footer -------------------------------------------------- */
@@ -487,6 +491,13 @@
       var h = location.hash.replace("#", "");
       if (h && window.ALTESA_CAT.categorias.some(function (c) { return c.id === h; })) this.cat = h;
       this.sync(); this.render();
+
+      // ?p=<id> abre directamente esa ficha: el enlace de un producto es compartible
+      var pid = new URLSearchParams(location.search).get("p");
+      if (pid && window.ALTESA_CAT.productos.some(function (x) { return x.id === pid; })) {
+        var self = this;
+        setTimeout(function () { self.detail(pid); }, 120);
+      }
     },
     buildFilters: function () {
       var C = window.ALTESA_CAT, self = this;
@@ -498,8 +509,9 @@
         }).join("");
       $("#chipsAmb").innerHTML =
         '<button class="chip" type="button" data-a="todos">Todos</button>' +
-        C.ambientes.map(function (a) {
-          return '<button class="chip" type="button" data-a="' + a.id + '">' + esc(a.n) + "</button>";
+        C.tipos.map(function (t) {
+          var n = C.productos.filter(function (p) { return p.tipo === t; }).length;
+          return '<button class="chip" type="button" data-a="' + esc(t) + '">' + esc(t) + " · " + n + "</button>";
         }).join("");
 
       $$("#chipsCat .chip").forEach(function (b) {
@@ -532,9 +544,11 @@
     },
     match: function (p) {
       if (this.cat !== "todas" && p.cat !== this.cat) return false;
-      if (this.amb !== "todos" && (p.amb || []).indexOf(this.amb) < 0) return false;
+      if (this.amb !== "todos" && p.tipo !== this.amb) return false;
       if (this.q) {
-        var hay = (p.n + " " + p.tag + " " + p.sku + " " + (p.prot || []).join(" ") + " " + (p.desc || "")).toLowerCase();
+        var hay = [p.n, p.tag, p.sku, p.tipo, (p.prot || []).join(" "), p.desc || "",
+                   (p.variantes || []).map(function (v) { return v.n + " " + v.sku; }).join(" ")
+                  ].join(" ").toLowerCase();
         if (hay.indexOf(this.q) < 0) return false;
       }
       return true;
@@ -566,7 +580,10 @@
             '<div class="pcard__foot">' +
               '<div class="badges">' + (p.prot || []).slice(0, 2).map(function (b) {
                 var cls = /zigbee/i.test(b) ? " badge--zig" : /matter/i.test(b) ? " badge--mat" : "";
-                return '<span class="badge' + cls + '">' + esc(b) + "</span>"; }).join("") + "</div>" +
+                return '<span class="badge' + cls + '">' + esc(b) + "</span>"; }).join("") +
+                ((p.variantes || []).length > 1
+                  ? '<span class="badge badge--var">' + p.variantes.length + " variantes</span>" : "") +
+              "</div>" +
               '<button class="pcard__add" type="button" data-add="' + p.id + '"></button>' +
             "</div>" +
           "</div></article>";
@@ -583,46 +600,86 @@
     detail: function (id) {
       var C = window.ALTESA_CAT;
       var p = C.productos.filter(function (x) { return x.id === id; })[0]; if (!p) return;
-      var c = C.categorias.filter(function (x) { return x.id === p.cat; })[0] || {};
-      var ambNames = (p.amb || []).map(function (a) {
-        var x = C.ambientes.filter(function (y) { return y.id === a; })[0]; return x ? x.n : a; });
+      var c = catDe(p.cat);
       var d = this.drawer;
       d.head.textContent = c.corta || "Producto";
 
+      var vars = p.variantes || [];
+      // Acabados/colores: eje visual con foto propia por opción
+      var acabados = [];
+      vars.forEach(function (v) {
+        if (v.acabado && acabados.indexOf(v.acabado) < 0) acabados.push(v.acabado);
+      });
+
+      function filaSku(v) {
+        return '<tr><td>' + esc(v.n) + "</td><td><code>" + esc(v.sku) + "</code></td></tr>";
+      }
+
       d.body.innerHTML =
         '<div class="dt" data-hasph>' +
-          '<div class="dt__media">' + imgTag(prodSrc(p), p.n, prodFb(p)) + "</div>" +
+          '<div class="dt__media" id="dtMedia">' + imgTag(prodSrc(p), p.n, prodFb(p)) + "</div>" +
           '<div class="badges">' + (p.prot || []).map(function (b) {
             var cls = /zigbee/i.test(b) ? " badge--zig" : /matter/i.test(b) ? " badge--mat" : "";
             return '<span class="badge' + cls + '">' + esc(b) + "</span>"; }).join("") + "</div>" +
           "<h3>" + esc(p.n) + "</h3>" +
-          '<div class="dt__sku">SKU provisional · ' + esc(p.sku) + "</div>" +
-          '<p class="dt__desc">' + esc(p.desc || p.tag) + "</p>" +
+          (p.sku ? '<div class="dt__sku">SKU · ' + esc(p.sku) + "</div>" : "") +
+          '<p class="dt__desc">' + esc(
+             (acabados.length > 1 &&
+              (vars.filter(function (v) { return v.acabado === acabados[0]; })[0] || {}).nota) ||
+             p.desc || p.tag) + "</p>" +
 
-          '<h4 class="dt__h4">Especificaciones</h4><dl class="spec">' +
-            Object.keys(p.specs || {}).map(function (k) {
-              return "<dt>" + esc(k) + "</dt><dd>" + esc(p.specs[k]) + "</dd>"; }).join("") +
-          "</dl>" +
+          (acabados.length > 1
+            ? '<h4 class="dt__h4">' + esc(p.eje || "Acabado") + "</h4>" +
+              '<div class="vopts" id="vopts">' + acabados.map(function (a, i) {
+                var v = vars.filter(function (x) { return x.acabado === a; })[0];
+                return '<button class="vopt' + (i === 0 ? " is-on" : "") + '" type="button" data-ac="' + esc(a) + '"' +
+                       (v && v.nota ? ' data-nota="' + esc(v.nota) + '"' : "") +
+                       (v && v.img ? ' data-img="img/productos/' + esc(v.img) + '"' : "") + ">" +
+                       (v && v.img ? imgTag(th("img/productos/" + v.img), a, prodFb(p)) : "") +
+                       "<span>" + esc(a) + "</span></button>";
+              }).join("") + "</div>"
+            : "") +
 
-          (p.acabados ? '<h4 class="dt__h4">Acabados</h4><div class="swatches">' +
-            p.acabados.map(function (a) {
-              return '<div class="sw"><i style="background:' + esc(a.c) + '"></i><span>' + esc(a.n) + "</span></div>";
-            }).join("") + "</div>" : "") +
+          (vars.length
+            ? '<h4 class="dt__h4">Modelos disponibles</h4>' +
+              '<table class="vtab" id="vtab"><thead><tr><th>Modelo</th><th>Código</th></tr></thead><tbody>' +
+              (acabados.length > 1
+                ? vars.filter(function (v) { return v.acabado === acabados[0]; }).map(filaSku).join("")
+                : vars.map(filaSku).join("")) +
+              "</tbody></table>"
+            : "") +
 
-          '<h4 class="dt__h4">Ambientes sugeridos</h4><div class="taglist">' +
-            ambNames.map(function (a) { return '<span class="tag">' + esc(a) + "</span>"; }).join("") + "</div>" +
+          (p.specs && p.specs.length
+            ? '<h4 class="dt__h4">Especificaciones</h4><ul class="speclist">' +
+              p.specs.map(function (s) { return "<li>" + esc(s) + "</li>"; }).join("") + "</ul>"
+            : "") +
 
-          '<div class="notice" style="margin-top:2rem">' + I.info +
-            "<p><b>Contenido de muestra</b>Nombre, SKU y especificaciones son provisionales para esta versión de revisión. " +
-            "Se sustituyen por la ficha real de ALTESA antes de publicar.</p></div>" +
+          '<h4 class="dt__h4">Sistema</h4><div class="taglist">' +
+            '<span class="tag">' + esc(c.n || "") + "</span>" +
+            (p.tipo ? '<span class="tag">' + esc(p.tipo) + "</span>" : "") + "</div>" +
         "</div>";
 
+      // Cambiar de acabado repinta la foto y la tabla de códigos
+      $$("#vopts .vopt", d.body).forEach(function (b) {
+        b.addEventListener("click", function () {
+          $$("#vopts .vopt", d.body).forEach(function (o) { o.classList.remove("is-on"); });
+          b.classList.add("is-on");
+          var ac = b.getAttribute("data-ac"), im = b.getAttribute("data-img");
+          if (im) $("#dtMedia img", d.body).src = im;
+          var nota = b.getAttribute("data-nota"), pd = $(".dt__desc", d.body);
+          if (nota && pd) pd.textContent = nota;
+          var tb = $("#vtab tbody", d.body);
+          if (tb) tb.innerHTML = vars.filter(function (v) { return v.acabado === ac; }).map(filaSku).join("");
+        });
+      });
+
       var on = SEL.has(p.id);
+      var ref = p.sku || (vars[0] && vars[0].sku) || "";
       d.foot.innerHTML =
         '<button class="btn btn--lg" type="button" id="dtAdd"><span>' +
           (on ? "Quitar de mi selección" : "Agregar a mi selección") + "</span>" + (on ? I.x : I.plus) + "</button>" +
         '<a class="btn btn--ghost" href="https://wa.me/' + CO.wa + "?text=" +
-          encodeURIComponent("Hola ALTESA, quisiera información sobre: " + p.n + " (" + p.sku + ")") +
+          encodeURIComponent("Hola ALTESA, quisiera información sobre: " + p.n + (ref ? " (" + ref + ")" : "")) +
           '" target="_blank" rel="noopener"><span>Consultar por WhatsApp</span>' + I.arw + "</a>";
 
       $("#dtAdd").addEventListener("click", function () { SEL.toggle(p.id); CATALOGO.detail(p.id); });
@@ -637,7 +694,7 @@
     host.innerHTML = eager(C.categorias.slice(0, limit || 99).map(function (c, i) {
       var n = C.productos.filter(function (p) { return p.cat === c.id; }).length;
       return '<a class="cat" href="catalogo.html#' + c.id + '">' +
-        '<span class="cat__img">' + imgTag(th("img/" + c.img), c.n, "img/placeholder/" + c.id + ".svg") + "</span>" +
+        '<span class="cat__img">' + imgTag(th("img/" + c.img), c.n, "img/placeholder/" + (c.ph || "control") + ".svg") + "</span>" +
         '<span class="cat__n">' + String(i + 1).padStart(2, "0") + "</span>" +
         "<h3>" + esc(c.n) + "</h3><p>" + esc(c.desc) + "</p>" +
         '<span class="cat__count">' + n + " referencias " + I.arw + "</span>" +
@@ -737,7 +794,7 @@
           return '<button class="cf__item" type="button" data-i="' + i + '" data-n="' + n +
                  '" aria-label="' + esc(c.n) + '">' +
                  '<span class="cf__badge">' + String(i + 1).padStart(2, "0") + "</span>" +
-                 imgTag(th("img/" + c.img), c.n, "img/placeholder/" + c.id + ".svg") + "</button>";
+                 imgTag(th("img/" + c.img), c.n, "img/placeholder/" + (c.ph || "control") + ".svg") + "</button>";
         }).join("") +
       "</div>" +
       '<div class="cf__info" id="cfInfo"><h3></h3><p></p>' +

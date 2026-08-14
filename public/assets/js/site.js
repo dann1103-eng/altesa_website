@@ -522,8 +522,28 @@
         });
       });
       $$("#chipsAmb .chip").forEach(function (b) {
-        b.addEventListener("click", function () { self.amb = b.getAttribute("data-a"); self.sync(); self.render(); });
+        b.addEventListener("click", function () {
+          self.amb = b.getAttribute("data-a");
+          self.sync(); self.render(); self.cerrarTipos();
+        });
       });
+
+      // Desplegable de tipos: la barra pegajosa se queda en dos líneas
+      var tog = $("#tipoTog"), panel = $("#tipoPanel");
+      if (tog && panel) {
+        tog.addEventListener("click", function () {
+          var abierto = panel.classList.toggle("is-open");
+          tog.setAttribute("aria-expanded", abierto ? "true" : "false");
+        });
+        document.addEventListener("click", function (e) {
+          if (!panel.classList.contains("is-open")) return;
+          if (panel.contains(e.target) || tog.contains(e.target)) return;
+          self.cerrarTipos();
+        });
+        document.addEventListener("keydown", function (e) {
+          if (e.key === "Escape") self.cerrarTipos();
+        });
+      }
       var s = $("#q"), t;
       s.addEventListener("input", function () {
         clearTimeout(t);
@@ -535,12 +555,24 @@
         self.sync(); self.render();
       });
     },
+    cerrarTipos: function () {
+      var p = $("#tipoPanel"), t = $("#tipoTog");
+      if (p) p.classList.remove("is-open");
+      if (t) t.setAttribute("aria-expanded", "false");
+    },
     sync: function () {
       var self = this;
       $$("#chipsCat .chip").forEach(function (b) {
         b.setAttribute("aria-pressed", b.getAttribute("data-c") === self.cat ? "true" : "false"); });
       $$("#chipsAmb .chip").forEach(function (b) {
         b.setAttribute("aria-pressed", b.getAttribute("data-a") === self.amb ? "true" : "false"); });
+      // El botón resume el tipo elegido, para saberlo sin desplegar
+      var et = $("#tipoActual"), tog = $("#tipoTog");
+      if (et) et.textContent = this.amb === "todos" ? "Todos" : this.amb;
+      if (tog) tog.setAttribute("data-on", this.amb === "todos" ? "0" : "1");
+      // La categoría activa se trae a la vista dentro de la fila deslizable
+      var act = $('#chipsCat .chip[aria-pressed="true"]');
+      if (act && act.scrollIntoView) act.scrollIntoView({ block: "nearest", inline: "nearest" });
     },
     match: function (p) {
       if (this.cat !== "todas" && p.cat !== this.cat) return false;

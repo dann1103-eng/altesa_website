@@ -433,12 +433,58 @@ h1,h2,h3,h4,p,figure{margin:0}
 .filters__meta{display:flex;justify-content:space-between;align-items:center;gap:1rem;flex-wrap:wrap}
 .filters__count{font-family:var(--f-mono);font-size:.65rem;letter-spacing:.16em;text-transform:uppercase;color:var(--tx-mid)}
 .filters__clear{font-family:var(--f-mono);font-size:.65rem;letter-spacing:.16em;text-transform:uppercase;color:var(--plum);text-decoration:underline;text-underline-offset:3px}
-/* En pantallas angostas la etiqueta va encima: los chips ganan todo el ancho */
+/* --- Barra compacta ------------------------------------------------------
+   Con 7 categorías y 20 tipos, mostrarlo todo desplegado comía media pantalla
+   al hacer scroll. Las categorías van en una sola fila deslizable y los tipos
+   quedan detrás de un desplegable.
+   ------------------------------------------------------------------------ */
+.chips--fila{
+  flex-wrap:nowrap;overflow-x:auto;overscroll-behavior-x:contain;
+  scrollbar-width:none;-ms-overflow-style:none;
+  padding-bottom:2px;
+  -webkit-mask-image:linear-gradient(90deg,#000 calc(100% - 28px),transparent);
+          mask-image:linear-gradient(90deg,#000 calc(100% - 28px),transparent);
+}
+.chips--fila::-webkit-scrollbar{display:none}
+
+.filters__row--pie{gap:.7rem}
+.filters__row--pie .filters__count{margin-left:auto;white-space:nowrap}
+
+.filtog{
+  display:inline-flex;align-items:center;gap:.5em;flex:none;
+  padding:.55em 1em;border-radius:var(--pill);
+  border:1px solid var(--hair-light);background:var(--paper);
+  font-family:var(--f-body);font-size:.84rem;font-weight:500;color:var(--tx-mid);
+  transition:border-color .3s,color .3s,background .3s;
+}
+.filtog:hover{border-color:var(--plum-3);color:var(--tx-dark)}
+.filtog b{font-weight:600;color:var(--tx-dark)}
+.filtog[data-on="1"]{border-color:var(--plum);background:rgba(166,42,121,.06)}
+.filtog[data-on="1"] b{color:var(--plum)}
+.filtog__v{transition:transform .35s var(--ease);flex:none}
+.filtog[aria-expanded="true"] .filtog__v{transform:rotate(180deg)}
+
+/* El panel flota sobre la rejilla: así la barra pegajosa nunca crece */
+.filters__panel{
+  position:absolute;left:0;right:0;top:100%;z-index:5;
+  background:var(--paper);border-bottom:1px solid var(--hair-light);
+  box-shadow:0 18px 36px -24px rgba(22,20,26,.5);
+  display:grid;grid-template-rows:0fr;
+  visibility:hidden;
+  transition:grid-template-rows .4s var(--mo-ease),visibility .4s;
+}
+.filters__panel.is-open{grid-template-rows:1fr;visibility:visible}
+.filters__panel > div{overflow:hidden}
+.filters__panel .chips{
+  padding:.9rem var(--pad);max-height:46svh;overflow-y:auto;
+  max-width:var(--maxw);margin-inline:auto;
+}
+
 @media (max-width:720px){
-  .filters__row{flex-direction:column;align-items:stretch;gap:.5rem}
-  .filters__lbl{min-width:0}
-  .search{min-width:0;width:100%}
-  .filters__in{padding-block:.85rem;gap:.7rem}
+  .filters__row--pie{flex-wrap:wrap}
+  .filters__row--pie .search{order:3;width:100%;min-width:0}
+  .filters__row--pie .filters__count{margin-left:auto}
+  .filters__in{padding-block:.8rem;gap:.6rem}
 }
 
 /* ---------- 12. Grid de productos --------------------------------------- */

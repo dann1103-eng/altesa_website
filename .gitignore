@@ -21,3 +21,6 @@ Desktop.ini
 # Dependencias (por si más adelante se agrega build)
 node_modules/
 .vercel
+
+# Intermedios de la tuberia de importacion
+tools/_work/

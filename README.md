@@ -47,7 +47,7 @@ Queda **fuera de la navegación** a propósito. Se llega de tres maneras:
 
 | Cómo | Dónde |
 |---|---|
-| Enlace directo | `altesa.com/reel` o `/vitrina` (también `/reel.html`) |
+| Enlace directo | `altesa-website.vercel.app/reel` — también `/vitrina` y `/reel.html` |
 | Pulsación larga | ~0.8 s sobre el isotipo del encabezado, en cualquier página |
 | Teclado | escribir `reel` fuera de un campo de texto |
 

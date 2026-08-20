@@ -24,17 +24,39 @@ Luego abrir <http://localhost:5173>.
 | Página | Archivo | Qué resuelve |
 |---|---|---|
 | Portada | `public/index.html` | Posicionamiento, entrada al catálogo, proyectos destacados |
-| **Catálogo** | `public/catalogo.html` | 62 productos filtrables por categoría y ambiente, ficha técnica, «Mi selección» |
+| **Catálogo** | `public/catalogo.html` | 101 productos filtrables por categoría y ambiente, ficha técnica, «Mi selección» |
 | Proyectos | `public/proyectos.html` | Los 12 proyectos del dossier con galería y lightbox |
 | Servicios | `public/servicios.html` | Proceso de 5 etapas + 6 servicios |
 | Profesionales | `public/profesionales.html` | Programa de aliados B2B (decoradoras, arquitectos, inmobiliarias) |
 | Contacto | `public/contacto.html` | Datos reales + formulario |
+| **Vitrina** | `public/reel.html` | Feed vertical tipo TikTok con 14 destacados en video — fuera del menú |
 
 **Función destacada:** en el catálogo, cada producto se puede agregar a **Mi selección**
 (ícono `+`). El botón del encabezado abre la lista y genera un mensaje de WhatsApp o
 correo con todos los productos elegidos. Pensado para que una decoradora arme la
 propuesta de un proyecto completo y la mande en un clic. La selección se guarda en el
 navegador.
+
+### La vitrina vertical — `/reel.html`
+
+Recorrido tipo TikTok: un producto destacado por pantalla, con su clip en 9:16 y
+los botones de guardar, ficha, compartir y WhatsApp al costado. Funciona igual
+con el pulgar en el teléfono que con la rueda del ratón en la computadora.
+
+Queda **fuera de la navegación** a propósito. Se llega de tres maneras:
+
+| Cómo | Dónde |
+|---|---|
+| Enlace directo | `altesa.com/reel` o `/vitrina` (también `/reel.html`) |
+| Pulsación larga | ~0.8 s sobre el isotipo del encabezado, en cualquier página |
+| Teclado | escribir `reel` fuera de un campo de texto |
+
+Lo que se guarda ahí es **la misma** «Mi selección» del catálogo: se puede empezar
+en la vitrina, seguir en el catálogo y mandar una sola cotización por WhatsApp.
+
+Los clips son fotografía de proyectos ALTESA reencuadrada a vertical con
+movimiento lento, y así se acredita en pantalla. Cuando haya video de producto,
+se sustituye el `.mp4` en `public/video/reel/` y ya. Ver `tools/README.md`.
 
 ---
 
@@ -88,13 +110,19 @@ altesa website/
 └─ public/
    ├─ index.html  catalogo.html  proyectos.html
    ├─ servicios.html  profesionales.html  contacto.html
+   ├─ reel.html                   vitrina vertical (fuera del menú)
    ├─ assets/
    │  ├─ css/site.css             sistema de diseño completo
+   │  ├─ css/reel.css             solo para la vitrina
    │  └─ js/
-   │     ├─ data-catalogo.js      ← 62 productos y 9 categorías (EDITABLE)
+   │     ├─ data-catalogo.js      ← 101 productos y 7 categorías (EDITABLE)
    │     ├─ data-proyectos.js     ← 12 proyectos (EDITABLE)
-   │     └─ site.js               comportamiento
+   │     ├─ data-reel.js          ← 14 destacados de la vitrina (EDITABLE)
+   │     ├─ site.js               comportamiento
+   │     └─ reel.js               solo la vitrina
+   ├─ video/reel/                 16 clips 9:16 generados
    └─ img/
+      ├─ reel/                    pósters de los clips
       ├─ proyectos/               47 fotos web (1600 px)
       │  ├─ th/                   miniaturas 720 px
       │  └─ _originales/          extraídas del PDF, sin tocar

@@ -103,6 +103,10 @@
 
   /* ---- Header / Footer -------------------------------------------------- */
   function mountChrome() {
+    // La vitrina vertical (reel.html) trae su propia cabecera a pantalla
+    // completa y marca el body con data-nochrome para saltarse esta.
+    if (document.body.hasAttribute("data-nochrome")) return;
+
     var here = (location.pathname.split("/").pop() || "index.html").toLowerCase();
 
     var hdr = document.createElement("header");
@@ -205,6 +209,39 @@
     onScroll();
     window.addEventListener("scroll", onScroll, { passive: true });
     window.addEventListener("resize", onScroll, { passive: true });
+
+    puertaVitrina($(".hdr__brand", hdr));
+  }
+
+  /* ---- Puerta a la vitrina vertical --------------------------------------
+     /reel.html queda fuera de la navegación a propósito: se enseña con el
+     enlace directo. Estos dos atajos existen para poder llegar sin teclear
+     la URL durante una demostración.
+       · dejar pulsado el isotipo del encabezado ~0.8 s
+       · teclear «reel» fuera de un campo de texto
+     ---------------------------------------------------------------------- */
+  function puertaVitrina(brand) {
+    if (brand) {
+      var t = null, disparado = false;
+      var soltar = function () { clearTimeout(t); t = null; };
+      brand.addEventListener("pointerdown", function () {
+        disparado = false;
+        t = setTimeout(function () { disparado = true; location.href = "reel.html"; }, 800);
+      });
+      ["pointerup", "pointerleave", "pointercancel"].forEach(function (ev) {
+        brand.addEventListener(ev, soltar);
+      });
+      brand.addEventListener("click", function (e) { if (disparado) e.preventDefault(); });
+    }
+
+    var buffer = "";
+    document.addEventListener("keydown", function (e) {
+      var t = e.target.tagName;
+      if (t === "INPUT" || t === "TEXTAREA" || e.metaKey || e.ctrlKey) return;
+      if (e.key.length !== 1) return;
+      buffer = (buffer + e.key.toLowerCase()).slice(-4);
+      if (buffer === "reel") location.href = "reel.html";
+    });
   }
 
   /* ---- Sistema de movimiento -------------------------------------------

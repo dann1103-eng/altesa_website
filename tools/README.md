@@ -73,3 +73,35 @@ python tools/optimize.py
 
 Los originales de impresión están fuera del repo por `.gitignore`: pesan ~100 MB
 y ninguna página los enlaza. Viven solo en la máquina de Daniel.
+
+---
+
+## Clips de la vitrina vertical (`/reel.html`)
+
+```bash
+python tools/reel_media.py            # arma los que falten
+python tools/reel_media.py --force    # rehace los 16
+```
+
+Genera `public/video/reel/*.mp4` (720×1280, H.264, sin audio, ~10 s, ~600 KB)
+y su póster en `public/img/reel/*.jpg`. Requiere **ffmpeg** en el PATH:
+
+```bash
+winget install Gyan.FFmpeg
+```
+
+El material de origen son las fotos de `img/proyectos/`, `img/galeria/` e
+`img/hero/`; el guion de qué foto va en cada clip está en el diccionario
+`CLIPS` al inicio del script. Cada clip es A → B → A con disolvencias, y el
+tercer tramo cierra en el encuadre inicial para que el `loop` no dé un salto.
+
+**Por qué el recorte a 3:4.** Las fotos del dossier son 16:9 y 5:4. Metidas
+enteras en un lienzo 9:16 quedaban como una franja con medio teléfono en negro.
+Recortadas al centro a 3:4, la foto nítida ocupa ~73 % del alto y el resto es la
+misma foto desenfocada de fondo — el recurso habitual de Reels. Si una foto
+queda mal encuadrada, la solución es cambiarla en `CLIPS`, no aflojar el recorte:
+así se descartaron `compassion-01` (cortaba el rótulo) y `central-monitoreo`
+(cortaba una cabeza).
+
+**Cuando lleguen videos reales del cliente:** dejar el `.mp4` en
+`public/video/reel/` con el mismo nombre de clip. Nada más cambia.

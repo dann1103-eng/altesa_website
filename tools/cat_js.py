@@ -7,6 +7,7 @@ _os.makedirs(WORK, exist_ok=True)
 
 """Escribe public/assets/js/data-catalogo.js desde el catálogo real."""
 import json, os, collections
+import cat_ajustes as AJ          # categorías del sitio: nombres, orden y textos
 
 OUT = WORK
 DST = _os.path.join(PUB, "assets", "js", "data-catalogo.js")
@@ -15,18 +16,6 @@ fin = json.load(open(os.path.join(OUT, "catalogo-final.json"), encoding="utf-8")
 par = json.load(open(os.path.join(OUT, "catalogo-parsed.json"), encoding="utf-8"))
 prods = fin["productos"]
 secc = {v["n"]: v for v in par["secciones"].values()}
-
-CAT = [
- ("centrales","01","Centrales de Control","Centrales","proyectos/portal-la-riviera-03.jpg"),
- ("interruptores","02","Interruptores Inteligentes","Interruptores","proyectos/compassion-02.jpg"),
- ("iluminacion","03","Iluminación Inteligente","Iluminación","proyectos/cerro-mar-01.jpg"),
- ("magnetico","04","Sistema Magnético","Magnético","proyectos/cerro-mar-03.jpg"),
- ("seguridad","05","Seguridad y Sensores","Seguridad","proyectos/la-florida-01.jpg"),
- ("cortinas","06","Cortinas Motorizadas","Cortinas","proyectos/cortinas-tuz-01.jpg"),
- ("audio","07","Audio y Control","Audio","proyectos/portales-del-bosque-04.jpg"),
-]
-PH = {"centrales":"control","interruptores":"control","iluminacion":"iluminacion",
-      "magnetico":"iluminacion","seguridad":"seguridad","cortinas":"cortinas","audio":"audio"}
 
 def js(v, ind=0):
     sp = "  " * ind
@@ -52,7 +41,9 @@ L = []
 L.append("""/* =========================================================================
    ALTESA — Catálogo comercial 2026
    ---------------------------------------------------------------------------
-   Generado desde ALTESA_Catalogol_2026.pdf (31 páginas, 110 fichas).
+   Generado desde ALTESA_Catalogol_2026.pdf (31 páginas, 110 fichas), con
+   los ajustes de ALTESA de tools/cat_ajustes.py: exclusiones, categorías y
+   variantes. NO EDITAR A MANO — se rehace con la tubería de tools/.
    Las fichas del mismo aparato en distinto acabado se consolidan en un solo
    producto con variantes: %d productos, %d con variantes.
    Fotografía de producto extraída del propio catálogo → /img/productos/
@@ -60,15 +51,15 @@ L.append("""/* =================================================================
 
 window.ALTESA_CAT = {
 
-  /* ---- Los 7 sistemas del catálogo ------------------------------------- */
-  categorias: [""" % (len(prods), sum(1 for p in prods if p["variantes"])))
+  /* ---- Las %d categorías del sitio ------------------------------------- */
+  categorias: [""" % (len(prods), sum(1 for p in prods if p["variantes"]), len(AJ.CATEGORIAS)))
 
-for cid, num, nom, corta, img in CAT:
-    s = secc.get(num, {})
-    n_prod = sum(1 for p in prods if p["cat"] == cid)
-    desc = s.get("intro") or s.get("sub", "")
-    L.append('    { id:"%s", num:"%s", n:%s, corta:%s,\n      sub:%s,\n      desc:%s,\n      img:%s, ph:"%s" },'
-             % (cid, num, js(nom), js(corta), js(s.get("sub", "").title()), js(desc), js(img), PH[cid]))
+for i, c in enumerate(AJ.CATEGORIAS):
+    s = secc.get(c.get("pdf"), {})
+    desc = c.get("desc") or s.get("intro") or s.get("sub", "")
+    L.append('    { id:"%s", num:"%02d", n:%s, corta:%s,\n      sub:%s,\n      desc:%s,\n      img:%s, ph:"%s" },'
+             % (c["id"], i + 1, js(c["n"]), js(c["corta"]), js(s.get("sub", "").title()),
+                js(desc), js(c["img"]), c["ph"]))
 L.append("  ],\n")
 
 L.append("  /* ---- Tipo de producto (filtro secundario) ---------------------------- */")
@@ -80,7 +71,7 @@ cat_actual = None
 for p in prods:
     if p["cat"] != cat_actual:
         cat_actual = p["cat"]
-        nom = next(c[2] for c in CAT if c[0] == cat_actual)
+        nom = next(c["n"] for c in AJ.CATEGORIAS if c["id"] == cat_actual)
         L.append("\n    /* ===== %s ===== */" % nom.upper())
     campos = {
         "id": p["id"], "sku": p["sku"], "cat": p["cat"], "tipo": p["serie"],

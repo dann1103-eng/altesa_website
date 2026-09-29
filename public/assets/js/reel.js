@@ -76,7 +76,8 @@
                   '<a class="btn btn--ghost" href="catalogo.html"><span>Catálogo completo</span></a>'
                 : '<a class="btn" id="cierreWa" href="#" target="_blank" rel="noopener"><span>Cotizar por WhatsApp</span>' +
                   '<svg class="arw" width="14" height="10" viewBox="0 0 14 10" fill="none"><path d="M0 5h12M8.5 1.2 12.8 5 8.5 8.8" stroke="currentColor" stroke-width="1.3"/></svg></a>' +
-                  '<a class="btn btn--ghost" href="catalogo.html"><span>Ver los 101 productos</span></a>') +
+                  '<a class="btn btn--ghost" href="catalogo.html"><span>Ver los ' + C.productos.length +
+                  " productos</span></a>") +
             "</div>";
     } else {
       var chips = s.chips || (p.specs || []).slice(0, 3);

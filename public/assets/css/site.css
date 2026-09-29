@@ -446,6 +446,13 @@ h1,h2,h3,h4,p,figure{margin:0}
           mask-image:linear-gradient(90deg,#000 calc(100% - 28px),transparent);
 }
 .chips--fila::-webkit-scrollbar{display:none}
+/* Con ratón esa fila no se puede deslizar, y con 11 categorías ya no cabe en
+   una sola línea en ningún escritorio: ahí se permite una segunda línea para
+   que ninguna categoría quede fuera de vista. En pantallas táctiles sigue
+   siendo una fila que se desliza con el dedo. */
+@media (hover:hover) and (pointer:fine){
+  .chips--fila{flex-wrap:wrap;overflow:visible;-webkit-mask-image:none;mask-image:none}
+}
 
 .filters__row--pie{gap:.7rem}
 .filters__row--pie .filters__count{margin-left:auto;white-space:nowrap}

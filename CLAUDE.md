@@ -26,7 +26,7 @@ public/
   reel.html                    vitrina vertical, fuera de la navegación
   assets/css/site.css          sistema de diseño completo
   assets/css/reel.css          solo la carga reel.html
-  assets/js/data-catalogo.js   ← 101 productos (EDITABLE, generado)
+  assets/js/data-catalogo.js   ← 91 productos en 11 categorías (se genera: ver tools/)
   assets/js/data-proyectos.js  ← 12 proyectos (EDITABLE, a mano)
   assets/js/data-reel.js       ← 14 destacados del feed (EDITABLE, a mano)
   assets/js/site.js            todo el comportamiento
@@ -63,6 +63,17 @@ Sin esto el navegador sirve la copia cacheada y parece que nada cambió.
 `data-catalogo.js` sale de `tools/` a partir del PDF oficial. Si hay catálogo
 nuevo, correr la tubería completa (ver `tools/README.md`) en vez de parchear el
 archivo. `data-proyectos.js` sí se edita a mano.
+
+Lo que ALTESA decide sobre ese PDF —qué productos se retiran, en qué categoría
+va cada uno, qué fichas se muestran como variante de otra, y la lista misma de
+categorías— vive en `tools/cat_ajustes.py`. Cada ronda de comentarios del
+cliente sobre el catálogo se resuelve ahí y se vuelve a correr la tubería. La
+tubería se detiene si un ajuste ya no encuentra su producto.
+
+Las cifras visibles («Explorar los 91 productos», «91 artículos con 193
+códigos») se rellenan desde los datos con `data-cifra`; el número escrito en el
+HTML es solo el respaldo sin JavaScript. Las que están en palabras («Once
+sistemas») y las `meta description` hay que cambiarlas a mano.
 
 ## La vitrina vertical (`/reel.html`)
 
@@ -146,10 +157,14 @@ bug que no existe:
 6. **`[hidden]` no oculta nada si la regla trae `display:flex` o `grid`.** Pasó
    con `.reel__cart` y `.reel__hint`. Hace falta el par explícito
    `.clase[hidden]{display:none}`.
+7. **Las imágenes con `loading="lazy"` salen en blanco en capturas headless**
+   aunque en el navegador carguen bien. Antes de diagnosticar una foto rota,
+   comprobar `naturalWidth` cargándola con `new Image()`.
 
 ## Estado y pendientes
 
-**Real y verificado:** 101 productos con 204 códigos del catálogo oficial 2026 ·
+**Real y verificado:** 91 productos con 193 códigos del catálogo oficial 2026, con la
+ronda 1 de ajustes de ALTESA (29 sep 2026) ·
 12 proyectos del dossier · 65 fotografías propias · datos de contacto.
 
 **Todavía de muestra, marcado con avisos visibles en el sitio:**

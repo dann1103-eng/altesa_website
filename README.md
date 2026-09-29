@@ -24,7 +24,7 @@ Luego abrir <http://localhost:5173>.
 | Página | Archivo | Qué resuelve |
 |---|---|---|
 | Portada | `public/index.html` | Posicionamiento, entrada al catálogo, proyectos destacados |
-| **Catálogo** | `public/catalogo.html` | 101 productos filtrables por categoría y ambiente, ficha técnica, «Mi selección» |
+| **Catálogo** | `public/catalogo.html` | 91 productos en 11 categorías, filtrables por categoría y tipo, ficha técnica, «Mi selección» |
 | Proyectos | `public/proyectos.html` | Los 12 proyectos del dossier con galería y lightbox |
 | Servicios | `public/servicios.html` | Proceso de 5 etapas + 6 servicios |
 | Profesionales | `public/profesionales.html` | Programa de aliados B2B (decoradoras, arquitectos, inmobiliarias) |
@@ -115,7 +115,7 @@ altesa website/
    │  ├─ css/site.css             sistema de diseño completo
    │  ├─ css/reel.css             solo para la vitrina
    │  └─ js/
-   │     ├─ data-catalogo.js      ← 101 productos y 7 categorías (EDITABLE)
+   │     ├─ data-catalogo.js      ← 91 productos y 11 categorías (se genera desde el PDF)
    │     ├─ data-proyectos.js     ← 12 proyectos (EDITABLE)
    │     ├─ data-reel.js          ← 14 destacados de la vitrina (EDITABLE)
    │     ├─ site.js               comportamiento

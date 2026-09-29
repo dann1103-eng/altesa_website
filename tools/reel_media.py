@@ -57,7 +57,7 @@ CLIPS = {
     "seguridad-camara":  ("proyectos/la-florida-01.jpg",        "proyectos/la-florida-03.jpg"),
     "seguridad-presencia":("proyectos/compassion-04.jpg",       "proyectos/compassion-02.jpg"),
     "cortinas-motor":    ("proyectos/cortinas-tuz-01.jpg",      "proyectos/cortinas-tuz-02.jpg"),
-    "cortinas-luz3d":    ("proyectos/cortinas-tuz-03.jpg",      "proyectos/cortinas-tuz-04.jpg"),
+    "clima":             ("proyectos/cabanas-ataco-02.jpg",     "proyectos/cabanas-ataco-07.jpg"),
     "audio-techo":       ("proyectos/legion-03.jpg",            "proyectos/legion-04.jpg"),
     "intro":             ("galeria/puerta-del-alma.jpg",        "galeria/showroom-exhibidor.jpg"),
     "cierre":            ("galeria/equipo-showroom.jpg",        "galeria/showroom-exhibidor.jpg"),

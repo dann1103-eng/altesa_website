@@ -8,6 +8,7 @@ _os.makedirs(WORK, exist_ok=True)
 """Genera data-catalogo.js a partir del catálogo real, fusionando acabados."""
 import json, os, re, unicodedata, collections
 from PIL import Image
+import cat_ajustes as AJ          # decisiones de ALTESA sobre el PDF
 
 OUT  = WORK
 PUB  = _os.path.join(ROOT, "public")
@@ -23,25 +24,11 @@ def slug(s, n=54):
     s = re.sub(r"[^a-zA-Z0-9]+", "-", s).strip("-").lower()
     return re.sub(r"-+", "-", s)[:n]
 
-# ---- Categorías (los 7 sistemas del PDF) ------------------------------------
+# ---- Sistemas del PDF --------------------------------------------------------
+# Punto de partida de cada producto. La categoría que ve el sitio puede ser otra:
+# ver MOVER_* y CATEGORIAS en cat_ajustes.py.
 CAT_ID = {"01":"centrales","02":"interruptores","03":"iluminacion",
           "04":"magnetico","05":"seguridad","06":"cortinas","07":"audio"}
-CAT_N  = {"01":"Centrales de Control","02":"Interruptores Inteligentes",
-          "03":"Iluminación Inteligente","04":"Sistema Magnético",
-          "05":"Seguridad y Sensores","06":"Cortinas Motorizadas","07":"Audio y Control"}
-CAT_CORTA = {"01":"Centrales","02":"Interruptores","03":"Iluminación",
-             "04":"Magnético","05":"Seguridad","06":"Cortinas","07":"Audio"}
-# Foto de proyecto que ilustra cada línea en la portada
-CAT_IMG = {"centrales":"proyectos/portal-la-riviera-03.jpg",
-           "interruptores":"proyectos/compassion-02.jpg",
-           "iluminacion":"proyectos/cerro-mar-01.jpg",
-           "magnetico":"proyectos/cerro-mar-03.jpg",
-           "seguridad":"proyectos/la-florida-01.jpg",
-           "cortinas":"proyectos/cortinas-tuz-01.jpg",
-           "audio":"proyectos/portales-del-bosque-04.jpg"}
-# Placeholder por categoría (los SVG existentes)
-CAT_PH = {"centrales":"control","interruptores":"control","iluminacion":"iluminacion",
-          "magnetico":"iluminacion","seguridad":"seguridad","cortinas":"cortinas","audio":"audio"}
 
 secc_por_n = {v["n"]: v for v in secc.values()}
 
@@ -55,6 +42,7 @@ FUSION = {
   "Defy Smart Panel":  ("Color",         "Interruptor con gateway Zigbee y pantalla de 2.41\"."),
   "MixSwitch Bach":    ("Formato",       "Control de escenas y circuitos de la serie Bach."),
 }
+FUSION.update(AJ.FUSION_EXTRA)
 def base(n): return n.split("·")[0].strip()
 def sufijo(n):
     b = base(n)
@@ -91,6 +79,9 @@ def serie_de(n):
     return "Otros"
 
 # ---- Construcción ------------------------------------------------------------
+for p in prods:
+    p["nombre"] = AJ.RENOMBRAR.get(p["nombre"], p["nombre"])
+
 grupos = collections.defaultdict(list)
 for p in prods:
     b = base(p["nombre"])
@@ -98,8 +89,12 @@ for p in prods:
     grupos[clave].append(p)
 
 salida, badges = [], collections.Counter()
+# Dentro de un grupo manda el orden del PDF, salvo en las fichas de RENOMBRAR:
+# ahí la primera del diccionario es la principal (foto, SKU y primera opción).
+prioridad = {nuevo: i for i, nuevo in enumerate(AJ.RENOMBRAR.values())}
 for clave, lista in grupos.items():
-    lista.sort(key=lambda z: (z["pagina"], z["col"], z["y"]))
+    lista.sort(key=lambda z: (prioridad.get(z["nombre"], len(prioridad)),
+                              z["pagina"], z["col"], z["y"]))
     p0 = lista[0]
     b = base(p0["nombre"])
     fusion = len(clave) == 2 and b in FUSION
@@ -150,7 +145,25 @@ for clave, lista in grupos.items():
         "pag": p0["pagina"],
     })
 
-salida.sort(key=lambda z: (list(CAT_ID.values()).index(z["cat"]), z["pag"], z["n"]))
+# ---- Ajustes de ALTESA ---------------------------------------------------------
+orden = [c["id"] for c in AJ.CATEGORIAS]
+
+faltan = sorted(AJ.EXCLUIR - {s["id"] for s in salida})
+if faltan:
+    raise SystemExit("EXCLUIR nombra productos que el PDF ya no trae: %s" % faltan)
+excluidos = [s["n"] for s in salida if s["id"] in AJ.EXCLUIR]
+salida = [s for s in salida if s["id"] not in AJ.EXCLUIR]
+
+for s in salida:
+    s["cat"] = (AJ.MOVER_ID.get(s["id"])
+                or AJ.MOVER_TIPO.get((s["cat"], s["serie"]))
+                or s["cat"])
+huerfanos = ["%s (%s)" % (s["id"], s["cat"]) for s in salida if s["cat"] not in orden]
+if huerfanos:
+    raise SystemExit("Productos sin categoría en el sitio; revisar MOVER_* en "
+                     "cat_ajustes.py: %s" % huerfanos)
+
+salida.sort(key=lambda z: (orden.index(z["cat"]), z["pag"], z["n"]))
 
 # ---- Miniaturas --------------------------------------------------------------
 hechas = 0
@@ -160,7 +173,8 @@ for s in salida:
         src = os.path.join(PROD, f)
         if not os.path.exists(src): continue
         dst = os.path.join(TH, f)
-        if os.path.exists(dst): continue
+        if os.path.exists(dst) and os.path.getmtime(dst) >= os.path.getmtime(src):
+            continue
         im = Image.open(src).convert("RGB")
         if im.width > 720:
             im = im.resize((720, round(im.height * 720 / im.width)), Image.LANCZOS)
@@ -175,8 +189,12 @@ print("productos finales:", len(salida), " (desde", len(prods), "fichas)")
 print("con variantes    :", sum(1 for s in salida if s["variantes"]))
 print("con eje de acabado:", sum(1 for s in salida if s["eje"]))
 print("miniaturas nuevas:", hechas)
-print("\npor categoría:")
-for cid in CAT_ID.values():
+print("excluidos por ALTESA:", len(excluidos))
+print("\npor categoría del sitio:")
+for cid in orden:
     print("  %-14s %d" % (cid, sum(1 for s in salida if s["cat"] == cid)))
+sin_foto = [s["id"] for s in salida if not s["img"]]
+if sin_foto:
+    print("\nOJO, sin foto:", sin_foto)
 print("\nbadges:", dict(badges))
 print("\nseries:", dict(collections.Counter(s["serie"] for s in salida)))

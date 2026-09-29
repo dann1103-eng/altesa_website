@@ -1,15 +1,17 @@
 /* =========================================================================
    ALTESA — Catálogo comercial 2026
    ---------------------------------------------------------------------------
-   Generado desde ALTESA_Catalogol_2026.pdf (31 páginas, 110 fichas).
+   Generado desde ALTESA_Catalogol_2026.pdf (31 páginas, 110 fichas), con
+   los ajustes de ALTESA de tools/cat_ajustes.py: exclusiones, categorías y
+   variantes. NO EDITAR A MANO — se rehace con la tubería de tools/.
    Las fichas del mismo aparato en distinto acabado se consolidan en un solo
-   producto con variantes: 101 productos, 37 con variantes.
+   producto con variantes: 91 productos, 37 con variantes.
    Fotografía de producto extraída del propio catálogo → /img/productos/
    ========================================================================= */
 
 window.ALTESA_CAT = {
 
-  /* ---- Los 7 sistemas del catálogo ------------------------------------- */
+  /* ---- Las 11 categorías del sitio ------------------------------------- */
   categorias: [
     { id:"centrales", num:"01", n:"Centrales de Control", corta:"Centrales",
       sub:"",
@@ -21,63 +23,49 @@ window.ALTESA_CAT = {
       img:"proyectos/compassion-02.jpg", ph:"control" },
     { id:"iluminacion", num:"03", n:"Iluminación Inteligente", corta:"Iluminación",
       sub:"",
-      desc:"GALAXY · SOPRO · SERIE S · SISTEMA MAGNÉTICO Luz de calidad arquitectónica: spotlights antideslumbrantes, luminarias de techo de diseño, tiras LED de alto CRI y un sistema magnético modular. Todo con control de intensidad y temperatura de color desde la app, paneles o voz.",
+      desc:"GALAXY · SOPRO · SERIE S · SISTEMA MAGNÉTICO Luz de calidad arquitectónica: spotlights antideslumbrantes, luminarias de techo de diseño y un sistema magnético modular. Todo con control de intensidad y temperatura de color desde la app, paneles o voz.",
       img:"proyectos/cerro-mar-01.jpg", ph:"iluminacion" },
-    { id:"magnetico", num:"04", n:"Sistema Magnético", corta:"Magnético",
+    { id:"tiras", num:"04", n:"Tiras LED", corta:"Tiras LED",
+      sub:"",
+      desc:"SOPRO · SKY DOME · COB Líneas de luz continuas para cielos falsos, muebles y nichos: tiras COB de alto CRI, kits RGB y bicolor, con controladores dimensionados según la longitud del proyecto. Intensidad y temperatura de color desde la app, paneles o voz.",
+      img:"proyectos/legion-02.jpg", ph:"iluminacion" },
+    { id:"magnetico", num:"05", n:"Sistema Magnético", corta:"Magnético",
       sub:"",
       desc:"RIEL 48V · MÓDULOS INTERCAMBIABLES · SERIE S20 Arquitectura de luz modular sobre riel magnético de baja tensión (48V): los módulos se colocan, deslizan y reconfiguran con la mano, sin herramientas. Proyectores, lineales y spotlights conviven en el mismo riel, empotrado o suspendido, con control total de intensidad y temperatura de color.",
       img:"proyectos/cerro-mar-03.jpg", ph:"iluminacion" },
-    { id:"seguridad", num:"05", n:"Seguridad y Sensores", corta:"Seguridad",
+    { id:"chapas", num:"06", n:"Chapas Smart", corta:"Chapas",
       sub:"",
-      desc:"CERRADURAS · CÁMARAS · SENSORES ZIGBEE Protección proactiva: acceso biométrico, videovigilancia 2K y una red de sensores que detecta presencia, apertura, humo, gas, fugas de agua y emergencias, disparando automatizaciones en tiempo real.",
+      desc:"CERRADURAS BIOMÉTRICAS · WI-FI Acceso sin llaves con huella, clave, NFC y códigos de un solo uso para visitas y huéspedes. La V5 Face suma reconocimiento facial y videoportero en la misma puerta.",
+      img:"proyectos/cabanas-ataco-03.jpg", ph:"accesos" },
+    { id:"sensores", num:"07", n:"Sensores Inteligentes", corta:"Sensores",
+      sub:"",
+      desc:"SENSORES ZIGBEE Una red que detecta presencia, movimiento, apertura de puertas y ventanas, humo, gas, fugas de agua, temperatura y humedad, más un botón de emergencia. Cada evento puede disparar una automatización en tiempo real.",
+      img:"proyectos/compassion-03.jpg", ph:"sensores" },
+    { id:"camaras", num:"08", n:"Cámaras de Seguridad", corta:"Cámaras",
+      sub:"",
+      desc:"VIDEOVIGILANCIA 2K · 4MP Cámara interior motorizada con giro de 350° y audio de dos vías, y cámara exterior de 4 MP con sello IP66 y alimentación PoE, con monitoreo en tiempo real.",
       img:"proyectos/la-florida-01.jpg", ph:"seguridad" },
-    { id:"cortinas", num:"06", n:"Cortinas Motorizadas", corta:"Cortinas",
+    { id:"cortinas", num:"09", n:"Cortinas Motorizadas", corta:"Cortinas",
       sub:"",
       desc:"SMART SHADING Apertura silenciosa, programada y sincronizada con la luz natural. Motores para cortinas de riel, enrollables y persianas, con kits listos para instalar en luces de hasta 4 metros.",
       img:"proyectos/cortinas-tuz-01.jpg", ph:"cortinas" },
-    { id:"audio", num:"07", n:"Audio y Control", corta:"Audio",
+    { id:"audio", num:"10", n:"Audio Ambiental", corta:"Audio",
       sub:"",
-      desc:"MÚSICA AMBIENTAL · CONTROL IR El toque final de la experiencia: música ambiental Hi-Fi empotrada en el cielo y control universal de equipos infrarrojos existentes como televisores y aires acondicionados.",
+      desc:"MÚSICA AMBIENTAL · HI-FI El toque final de la experiencia: música ambiental Hi-Fi empotrada en el cielo falso, con parlantes esclavos para extender la cobertura por zonas.",
       img:"proyectos/portales-del-bosque-04.jpg", ph:"audio" },
+    { id:"clima", num:"11", n:"Control de A/C", corta:"Control A/C",
+      sub:"",
+      desc:"MAGIC DOT · CONTROL INFRARROJO Vuelve inteligente el aire acondicionado que ya está instalado, sin cambiar el equipo: aprende los códigos de su control remoto y lo suma al sistema. Sirve también para televisores y proyectores.",
+      img:"proyectos/cabanas-ataco-02.jpg", ph:"clima" },
   ],
 
   /* ---- Tipo de producto (filtro secundario) ---------------------------- */
   tipos: ["Audio", "Cerradura", "Colgante", "Cortina", "Cámara", "Downlight", "Fuente y driver", "Gateway", "Lineal", "Módulo magnético", "Panel central", "Panel e interruptor", "Plafón", "Proyector", "Riel y accesorios", "Sensor", "Spotlight", "Tira y manguera", "Otros"],
 
-  /* ---- 101 productos ---------------------------------------------------- */
+  /* ---- 91 productos ---------------------------------------------------- */
   productos: [
 
     /* ===== CENTRALES DE CONTROL ===== */
-    { id: "mixpad-10-matter", sku: "V82X", cat: "centrales", tipo: "Panel central", n: "MixPad 10 (Matter)", tag: "Panel de 7\" con 4 circuitos de iluminación.",
-      img: "mixpad-10-matter.jpg",
-      prot: ["MATTER"],
-      specs: [
-        "Hasta 300 dispositivos",
-        "Pantalla 7\" · 1024×600P · 500 nits",
-        "4 circuitos · total ≤800W",
-        "Sensor IR con aprendizaje · Negro o dorado",
-      ],
-    },
-    { id: "mixpad-12-matter", sku: "V65X", cat: "centrales", tipo: "Panel central", n: "MixPad 12 (Matter)", tag: "Gateway con pantalla de 12.3\" y soporte Matter.",
-      img: "mixpad-12-matter.jpg",
-      prot: ["MATTER"],
-      specs: [
-        "Hasta 350 dispositivos",
-        "Pantalla 12.3\" · 1920×720P · 400 nits",
-        "2 circuitos · ≤600W por circuito",
-        "Negro o dorado",
-      ],
-    },
-    { id: "mixpad-4-ai-matter", sku: "V38X", cat: "centrales", tipo: "Panel central", n: "MixPad 4 (AI & Matter)", tag: "Panel compacto de 4\" formato interruptor.",
-      img: "mixpad-4-ai-matter.jpg",
-      prot: ["MATTER"],
-      specs: [
-        "Hasta 256 dispositivos",
-        "Pantalla 4\" · 480×480P",
-        "2 circuitos · ≤400W · Sensor IR",
-        "Negro, dorado o blanco",
-      ],
-    },
     { id: "mixpad-7-matter", cat: "centrales", tipo: "Panel central", n: "MixPad 7 (Matter)", tag: "Gateway de 7\" para control central de estancias.",
       img: "mixpad-7-matter.jpg",
       prot: ["MATTER"],
@@ -91,16 +79,6 @@ window.ALTESA_CAT = {
         { n: "Dorado", sku: "V80XA-II", img: "mixpad-7-matter.jpg" },
       ],
     },
-    { id: "mixpad-s12", sku: "V65X", cat: "centrales", tipo: "Panel central", n: "MixPad S12", tag: "Panel central de 12.3\" con videoportero integrado.",
-      img: "mixpad-s12.jpg",
-      prot: ["ZIGBEE 3.0"],
-      specs: [
-        "Pantalla 12.3\" · 1920×720P",
-        "Zigbee 3.0 · Wi-Fi 2.4/5G · BT · RS485",
-        "2 circuitos de luz integrados · ≤600W",
-        "Videoportero incorporado",
-      ],
-    },
     { id: "mixpad-x-pro", sku: "V65X", cat: "centrales", tipo: "Panel central", n: "MixPad X Pro", tag: "Panel premium 12.3\" con unidad interior de video.",
       img: "mixpad-x-pro.jpg",
       prot: ["ZIGBEE 3.0"],
@@ -108,16 +86,6 @@ window.ALTESA_CAT = {
         "Pantalla 12.3\"",
         "Zigbee · Wi-Fi 2.4/5G · BT 5.1 · Ethernet",
         "Alimentación DC12V 2.5A",
-      ],
-    },
-    { id: "gauss-g1-pantalla-con-perilla", sku: "GV10", cat: "centrales", tipo: "Panel e interruptor", n: "Gauss G1 · Pantalla con Perilla", tag: "Interacción de 5 dimensiones con dimming de precisión.",
-      img: "gauss-g1-pantalla-con-perilla.jpg",
-      prot: ["ZIGBEE 3.0"],
-      specs: [
-        "Gateway Zigbee integrado",
-        "Dimming con precisión de 0.01%",
-        "Pantalla IPS calidad retina",
-        "Wi-Fi · BT · RS-485 · Zigbee",
       ],
     },
     { id: "gauss-g2-panel-inteligente", sku: "GV10", cat: "centrales", tipo: "Panel e interruptor", n: "Gauss G2 · Panel Inteligente", tag: "Panel compacto con pantalla de 1.8\" y gateway Zigbee.",
@@ -267,20 +235,6 @@ window.ALTESA_CAT = {
         { n: "1 circuito", sku: "T60W1Z", acabado: "Dorado", nota: "Textura dorada tipo madera clara, distinción total.", img: "gauss-ii-acabado-dorado.jpg" },
         { n: "2 circuitos", sku: "T60W2Z", acabado: "Dorado", nota: "Textura dorada tipo madera clara, distinción total.", img: "gauss-ii-acabado-dorado.jpg" },
         { n: "3 circuitos", sku: "T60W3Z", acabado: "Dorado", nota: "Textura dorada tipo madera clara, distinción total.", img: "gauss-ii-acabado-dorado.jpg" },
-      ],
-    },
-    { id: "mixswitch-monofasico-sin-neutro", cat: "interruptores", tipo: "Panel e interruptor", n: "MixSwitch Monofásico (Sin Neutro)", tag: "Para instalaciones existentes sin cable neutro.",
-      img: "mixswitch-monofasico-sin-neutro.jpg",
-      prot: ["ZIGBEE"],
-      specs: [
-        "Conexión de línea única",
-        "1 a 3 circuitos · 200W c/u",
-        "Retrofit sin recableado",
-      ],
-      variantes: [
-        { n: "1 circuito", sku: "T41W1Z", img: "mixswitch-monofasico-sin-neutro.jpg" },
-        { n: "2 circuitos", sku: "T41W2Z", img: "mixswitch-monofasico-sin-neutro.jpg" },
-        { n: "3 circuitos", sku: "T41W3Z", img: "mixswitch-monofasico-sin-neutro.jpg" },
       ],
     },
     { id: "touch-pro", cat: "interruptores", tipo: "Panel e interruptor", n: "Touch Pro", tag: "Panel táctil de vidrio en formato alargado.",
@@ -472,11 +426,11 @@ window.ALTESA_CAT = {
       ],
     },
     { id: "s10-sopro-luminaria-lineal", cat: "iluminacion", tipo: "Lineal", n: "S10 SOPRO · Luminaria Lineal", tag: "Grille light empotrada de 10W y 20W.",
-      img: "accesorios-de-empotrado-s5-q2.jpg",
+      img: "s10-sopro-luminaria-lineal.jpg",
       prot: ["SOPRO"],
       variantes: [
-        { n: "10W · 680 lm", sku: "DFZ10160", img: "accesorios-de-empotrado-s5-q2.jpg" },
-        { n: "20W · 1360 lm", sku: "DFZ20162", img: "accesorios-de-empotrado-s5-q2.jpg" },
+        { n: "10W · 680 lm", sku: "DFZ10160", img: "s10-sopro-luminaria-lineal.jpg" },
+        { n: "20W · 1360 lm", sku: "DFZ20162", img: "s10-sopro-luminaria-lineal.jpg" },
       ],
     },
     { id: "sky-dome-lite-plafon", sku: "S427202-17L", cat: "iluminacion", tipo: "Plafón", n: "Sky Dome Lite · Plafón", tag: "Luminaria de techo minimalista de 40W.",
@@ -487,16 +441,6 @@ window.ALTESA_CAT = {
       img: "starfield-plafon-de-diseno.jpg",
       prot: ["PLAFÓN"],
     },
-    { id: "controladores-para-tira-led", cat: "iluminacion", tipo: "Tira y manguera", n: "Controladores para Tira LED", tag: "Drivers inteligentes según la longitud del proyecto.",
-      img: "controladores-para-tira-led.jpg",
-      prot: ["DRIVER"],
-      variantes: [
-        { n: "36W", sku: "DMZ36134", img: "controladores-para-tira-led.jpg" },
-        { n: "72W", sku: "DMZ72195", img: "controladores-para-tira-led.jpg" },
-        { n: "120W", sku: "DMZ12135", img: "controladores-para-tira-led.jpg" },
-        { n: "200W", sku: "DMZ20314", img: "controladores-para-tira-led.jpg" },
-      ],
-    },
     { id: "halo-plafon-de-diseno", sku: "S427099-20L", cat: "iluminacion", tipo: "Plafón", n: "Halo · Plafón de Diseño", tag: "Anillo luminoso con detalle dorado.",
       img: "halo-plafon-de-diseno.jpg",
       prot: ["PLAFÓN"],
@@ -504,22 +448,6 @@ window.ALTESA_CAT = {
     { id: "moon-plafon-de-diseno", sku: "S427205-20L", cat: "iluminacion", tipo: "Plafón", n: "Moon · Plafón de Diseño", tag: "Perfil bajo de 54 mm para grandes espacios.",
       img: "moon-plafon-de-diseno.jpg",
       prot: ["PLAFÓN"],
-    },
-    { id: "sopro-s10-tira-cob-alta-intensidad", sku: "DLZ67073", cat: "iluminacion", tipo: "Tira y manguera", n: "SOPRO S10 · Tira COB Alta Intensidad", tag: "COB de línea continua con CRI≥90.",
-      img: "sopro-s10-tira-cob-alta-intensidad.jpg",
-      prot: ["SOPRO"],
-    },
-    { id: "sky-dome-tira-led-rgb-kit-5-m", cat: "iluminacion", tipo: "Tira y manguera", n: "Sky Dome · Tira LED RGB Kit 5 m", tag: "Kit completo Wi-Fi + BLE, extensible a 20 m.",
-      img: "sky-dome-tira-led-rgb-kit-5-m.jpg",
-      prot: ["WI-FI"],
-      variantes: [
-        { n: "Kit 5 m", sku: "DLW48326", img: "sky-dome-tira-led-rgb-kit-5-m.jpg" },
-        { n: "Extensión 5 m", sku: "DLW24311", img: "sky-dome-tira-led-rgb-kit-5-m.jpg" },
-      ],
-    },
-    { id: "tira-led-sin-sombras-bicolor", sku: "DSZ30181", cat: "iluminacion", tipo: "Tira y manguera", n: "Tira LED Sin Sombras Bicolor", tag: "Luz continua sin puntos para perfiles de aluminio.",
-      img: "tira-led-sin-sombras-bicolor.jpg",
-      prot: ["ZIGBEE"],
     },
     { id: "copas-de-color-intercambiables", cat: "iluminacion", tipo: "Otros", n: "Copas de Color Intercambiables", tag: "Personalizan el interior del spotlight por ambiente.",
       img: "copas-de-color-intercambiables.jpg",
@@ -547,7 +475,7 @@ window.ALTESA_CAT = {
       ],
     },
     { id: "spotlight-rgb-10w-38", cat: "iluminacion", tipo: "Spotlight", n: "Spotlight RGB 10W · 38°", tag: "Color RGB más blanco regulable en un solo empotrado.",
-      img: "lampara-colgante-de-comedor.jpg",
+      img: "spotlight-rgb-10w-38.jpg",
       prot: ["RGB"],
     },
     { id: "spotlight-rgb-cuadrado-12w", cat: "iluminacion", tipo: "Spotlight", n: "Spotlight RGB Cuadrado 12W", tag: "Formato cuadrado con color RGB y blanco regulable.",
@@ -600,14 +528,14 @@ window.ALTESA_CAT = {
       prot: ["ZIGBEE"],
     },
     { id: "luminaria-lineal-grille-4-30w", cat: "iluminacion", tipo: "Lineal", n: "Luminaria Lineal Grille 4-30W", tag: "Familia lineal empotrada en cinco potencias.",
-      img: "spotlight-tipo-camara-orientable.jpg",
+      img: "luminaria-lineal-grille-4-30w.jpg",
       prot: ["ZIGBEE"],
       variantes: [
-        { n: "4W", sku: "L69 · corte L60", img: "spotlight-tipo-camara-orientable.jpg" },
-        { n: "6W", sku: "L96 · corte L88", img: "spotlight-tipo-camara-orientable.jpg" },
-        { n: "10W", sku: "L148 · corte L140", img: "spotlight-tipo-camara-orientable.jpg" },
-        { n: "20W", sku: "L280 · corte L270", img: "spotlight-tipo-camara-orientable.jpg" },
-        { n: "30W", sku: "L417 · corte L408", img: "spotlight-tipo-camara-orientable.jpg" },
+        { n: "4W", sku: "L69 · corte L60", img: "luminaria-lineal-grille-4-30w.jpg" },
+        { n: "6W", sku: "L96 · corte L88", img: "luminaria-lineal-grille-4-30w.jpg" },
+        { n: "10W", sku: "L148 · corte L140", img: "luminaria-lineal-grille-4-30w.jpg" },
+        { n: "20W", sku: "L280 · corte L270", img: "luminaria-lineal-grille-4-30w.jpg" },
+        { n: "30W", sku: "L417 · corte L408", img: "luminaria-lineal-grille-4-30w.jpg" },
       ],
     },
     { id: "spotlight-borde-fino-aluminio", cat: "iluminacion", tipo: "Spotlight", n: "Spotlight Borde Fino Aluminio", tag: "Cuerpo íntegro de aluminio con borde mínimo.",
@@ -639,9 +567,37 @@ window.ALTESA_CAT = {
       prot: ["ZIGBEE"],
     },
 
+    /* ===== TIRAS LED ===== */
+    { id: "controladores-para-tira-led", cat: "tiras", tipo: "Tira y manguera", n: "Controladores para Tira LED", tag: "Drivers inteligentes según la longitud del proyecto.",
+      img: "controladores-para-tira-led.jpg",
+      prot: ["DRIVER"],
+      variantes: [
+        { n: "36W", sku: "DMZ36134", img: "controladores-para-tira-led.jpg" },
+        { n: "72W", sku: "DMZ72195", img: "controladores-para-tira-led.jpg" },
+        { n: "120W", sku: "DMZ12135", img: "controladores-para-tira-led.jpg" },
+        { n: "200W", sku: "DMZ20314", img: "controladores-para-tira-led.jpg" },
+      ],
+    },
+    { id: "sopro-s10-tira-cob-alta-intensidad", sku: "DLZ67073", cat: "tiras", tipo: "Tira y manguera", n: "SOPRO S10 · Tira COB Alta Intensidad", tag: "COB de línea continua con CRI≥90.",
+      img: "sopro-s10-tira-cob-alta-intensidad.jpg",
+      prot: ["SOPRO"],
+    },
+    { id: "sky-dome-tira-led-rgb-kit-5-m", cat: "tiras", tipo: "Tira y manguera", n: "Sky Dome · Tira LED RGB Kit 5 m", tag: "Kit completo Wi-Fi + BLE, extensible a 20 m.",
+      img: "sky-dome-tira-led-rgb-kit-5-m.jpg",
+      prot: ["WI-FI"],
+      variantes: [
+        { n: "Kit 5 m", sku: "DLW48326", img: "sky-dome-tira-led-rgb-kit-5-m.jpg" },
+        { n: "Extensión 5 m", sku: "DLW24311", img: "sky-dome-tira-led-rgb-kit-5-m.jpg" },
+      ],
+    },
+    { id: "tira-led-sin-sombras-bicolor", sku: "DSZ30181", cat: "tiras", tipo: "Tira y manguera", n: "Tira LED Sin Sombras Bicolor", tag: "Luz continua sin puntos para perfiles de aluminio.",
+      img: "tira-led-sin-sombras-bicolor.jpg",
+      prot: ["ZIGBEE"],
+    },
+
     /* ===== SISTEMA MAGNÉTICO ===== */
     { id: "lineal-grille-magnetico-15w", sku: "DCZ15131", cat: "magnetico", tipo: "Lineal", n: "Lineal Grille Magnético 15W", tag: "Lineal de alto flujo para recorridos y mesas.",
-      img: "proyector-magnetico-15w.jpg",
+      img: "lineal-grille-magnetico-15w.jpg",
       prot: ["MAGNÉTICO"],
     },
     { id: "lineal-grille-magnetico-8w", sku: "DCZ08131", cat: "magnetico", tipo: "Lineal", n: "Lineal Grille Magnético 8W", tag: "Módulo lineal antideslumbrante de acento.",
@@ -656,13 +612,14 @@ window.ALTESA_CAT = {
       img: "proyector-magnetico-8w.jpg",
       prot: ["MAGNÉTICO"],
     },
-    { id: "spotlight-magnetico-15w", sku: "DCZ15133", cat: "magnetico", tipo: "Spotlight", n: "Spotlight Magnético 15W", tag: "Acento de mayor alcance para dobles alturas.",
+    { id: "spotlight-magnetico", sku: "DCZ15133", cat: "magnetico", tipo: "Spotlight", n: "Spotlight Magnético", tag: "Acento dirigido y orientable sobre el riel, en 15W u 8W.",
       img: "spotlight-magnetico-8w.jpg",
       prot: ["MAGNÉTICO"],
-    },
-    { id: "spotlight-magnetico-8w", sku: "DCZ08133", cat: "magnetico", tipo: "Spotlight", n: "Spotlight Magnético 8W", tag: "Acento dirigido orientable sobre el riel.",
-      img: "spotlight-magnetico-8w.jpg",
-      prot: ["MAGNÉTICO"],
+      eje: "Potencia",
+      variantes: [
+        { n: "15W", sku: "DCZ15133", acabado: "15W", nota: "Acento de mayor alcance para dobles alturas.", img: "spotlight-magnetico-8w.jpg" },
+        { n: "8W", sku: "DCZ08133", acabado: "8W", nota: "Acento dirigido orientable sobre el riel.", img: "spotlight-magnetico-8w.jpg" },
+      ],
     },
     { id: "conector-recto-i", sku: "DG10DI", cat: "magnetico", tipo: "Riel y accesorios", n: "Conector Recto (I)", tag: "Extiende el riel en línea recta.",
       img: "conector-recto-i.jpg",
@@ -764,8 +721,8 @@ window.ALTESA_CAT = {
       ],
     },
 
-    /* ===== SEGURIDAD Y SENSORES ===== */
-    { id: "cerradura-c1", sku: "C1", cat: "seguridad", tipo: "Cerradura", n: "Cerradura C1", tag: "Acceso inteligente Wi-Fi de alto valor.",
+    /* ===== CHAPAS SMART ===== */
+    { id: "cerradura-c1", sku: "C1", cat: "chapas", tipo: "Cerradura", n: "Cerradura C1", tag: "Acceso inteligente Wi-Fi de alto valor.",
       img: "cerradura-c1.jpg",
       prot: ["WI-FI"],
       specs: [
@@ -774,7 +731,7 @@ window.ALTESA_CAT = {
         "Puertas de 40 a 120 mm",
       ],
     },
-    { id: "cerradura-v5-face", sku: "V5", cat: "seguridad", tipo: "Cerradura", n: "Cerradura V5 Face", tag: "Reconocimiento facial y videoportero en la puerta.",
+    { id: "cerradura-v5-face", sku: "V5", cat: "chapas", tipo: "Cerradura", n: "Cerradura V5 Face", tag: "Reconocimiento facial y videoportero en la puerta.",
       img: "cerradura-v5-face.jpg",
       prot: ["BIOMÉTRICA"],
       specs: [
@@ -784,25 +741,9 @@ window.ALTESA_CAT = {
         "Puertas de 45 a 120 mm",
       ],
     },
-    { id: "camara-exterior-s3-4mp", sku: "BC10", cat: "seguridad", tipo: "Cámara", n: "Cámara Exterior S3 · 4MP", tag: "Vigilancia perimetral con PoE e IP66.",
-      img: "camara-exterior-s3-4mp.jpg",
-      prot: ["IP66"],
-      specs: [
-        "4 MP (2560×1440) · F1.6",
-        "Wi-Fi 2.4G o PoE 48V",
-        "Protección IP66",
-      ],
-    },
-    { id: "camara-interior-s1-2k", sku: "SC41PT", cat: "seguridad", tipo: "Cámara", n: "Cámara Interior S1 · 2K", tag: "PTZ motorizada con audio bidireccional.",
-      img: "camara-interior-s1-2k.jpg",
-      prot: ["2K"],
-      specs: [
-        "3 MP (2K) · PTZ 350°/110°",
-        "Monitoreo en tiempo real",
-        "Audio de dos vías",
-      ],
-    },
-    { id: "sensor-de-movimiento-pir", sku: "SN20", cat: "seguridad", tipo: "Sensor", n: "Sensor de Movimiento PIR", tag: "Detección de movimiento para automatizaciones.",
+
+    /* ===== SENSORES INTELIGENTES ===== */
+    { id: "sensor-de-movimiento-pir", sku: "SN20", cat: "sensores", tipo: "Sensor", n: "Sensor de Movimiento PIR", tag: "Detección de movimiento para automatizaciones.",
       img: "sensor-de-movimiento-pir.jpg",
       prot: ["ZIGBEE"],
       specs: [
@@ -811,7 +752,7 @@ window.ALTESA_CAT = {
         "Compacto 48×53 mm",
       ],
     },
-    { id: "sensor-de-presencia-mixsense", sku: "S361", cat: "seguridad", tipo: "Sensor", n: "Sensor de Presencia MixSense", tag: "Radar mmWave + infrarrojo: detecta presencia estática.",
+    { id: "sensor-de-presencia-mixsense", sku: "S361", cat: "sensores", tipo: "Sensor", n: "Sensor de Presencia MixSense", tag: "Radar mmWave + infrarrojo: detecta presencia estática.",
       img: "sensor-de-presencia-mixsense.jpg",
       prot: ["RADAR"],
       specs: [
@@ -820,7 +761,7 @@ window.ALTESA_CAT = {
         "Empotrado ø70 mm · AC100-240V",
       ],
     },
-    { id: "boton-de-emergencia", sku: "SE30", cat: "seguridad", tipo: "Otros", n: "Botón de Emergencia", tag: "Alerta SOS instantánea a toda la familia.",
+    { id: "boton-de-emergencia", sku: "SE30", cat: "sensores", tipo: "Otros", n: "Botón de Emergencia", tag: "Alerta SOS instantánea a toda la familia.",
       img: "boton-de-emergencia.jpg",
       prot: ["ZIGBEE"],
       specs: [
@@ -829,7 +770,7 @@ window.ALTESA_CAT = {
         "Ideal para adultos mayores",
       ],
     },
-    { id: "sensor-de-fuga-de-agua-pro", sku: "SW30", cat: "seguridad", tipo: "Sensor", n: "Sensor de Fuga de Agua Pro", tag: "Para sótanos, cuartos de máquinas y cocinas.",
+    { id: "sensor-de-fuga-de-agua-pro", sku: "SW30", cat: "sensores", tipo: "Sensor", n: "Sensor de Fuga de Agua Pro", tag: "Para sótanos, cuartos de máquinas y cocinas.",
       img: "sensor-de-fuga-de-agua-pro.jpg",
       prot: ["ZIGBEE"],
       specs: [
@@ -838,7 +779,7 @@ window.ALTESA_CAT = {
         "Alertas inmediatas",
       ],
     },
-    { id: "sensor-de-gas-combustible", sku: "JT-SG30", cat: "seguridad", tipo: "Sensor", n: "Sensor de Gas Combustible", tag: "Detección de metano con alarma local.",
+    { id: "sensor-de-gas-combustible", sku: "JT-SG30", cat: "sensores", tipo: "Sensor", n: "Sensor de Gas Combustible", tag: "Detección de metano con alarma local.",
       img: "sensor-de-gas-combustible.jpg",
       prot: ["ZIGBEE"],
       specs: [
@@ -847,7 +788,7 @@ window.ALTESA_CAT = {
         "Automatización de válvulas",
       ],
     },
-    { id: "sensor-de-humo-pro", sku: "SF30", cat: "seguridad", tipo: "Sensor", n: "Sensor de Humo Pro", tag: "Alarma sonora y notificación instantánea.",
+    { id: "sensor-de-humo-pro", sku: "SF30", cat: "sensores", tipo: "Sensor", n: "Sensor de Humo Pro", tag: "Alarma sonora y notificación instantánea.",
       img: "sensor-de-humo-pro.jpg",
       prot: ["ZIGBEE"],
       specs: [
@@ -856,7 +797,7 @@ window.ALTESA_CAT = {
         "ø90×37 mm",
       ],
     },
-    { id: "sensor-de-puerta-ventana", sku: "SM20", cat: "seguridad", tipo: "Sensor", n: "Sensor de Puerta / Ventana", tag: "Estado de apertura en tiempo real.",
+    { id: "sensor-de-puerta-ventana", sku: "SM20", cat: "sensores", tipo: "Sensor", n: "Sensor de Puerta / Ventana", tag: "Estado de apertura en tiempo real.",
       img: "sensor-de-puerta-ventana.jpg",
       prot: ["ZIGBEE"],
       specs: [
@@ -865,7 +806,7 @@ window.ALTESA_CAT = {
         "Perfil ultracompacto",
       ],
     },
-    { id: "sensor-de-temperatura-y-humedad", sku: "ST30", cat: "seguridad", tipo: "Sensor", n: "Sensor de Temperatura y Humedad", tag: "Clima interior monitoreado y automatizado.",
+    { id: "sensor-de-temperatura-y-humedad", sku: "ST30", cat: "sensores", tipo: "Sensor", n: "Sensor de Temperatura y Humedad", tag: "Clima interior monitoreado y automatizado.",
       img: "sensor-de-temperatura-y-humedad.jpg",
       prot: ["ZIGBEE"],
       specs: [
@@ -875,16 +816,27 @@ window.ALTESA_CAT = {
       ],
     },
 
-    /* ===== CORTINAS MOTORIZADAS ===== */
-    { id: "cortina-de-luz-3d-2a-gen", sku: "W20MZ", cat: "cortinas", tipo: "Cortina", n: "Cortina de Luz 3D · 2ª Gen", tag: "Motor rotativo para cortinas de efecto lumínico.",
-      img: "cortina-de-luz-3d-2a-gen.jpg",
-      prot: ["ZIGBEE"],
+    /* ===== CÁMARAS DE SEGURIDAD ===== */
+    { id: "camara-exterior-s3-4mp", sku: "BC10", cat: "camaras", tipo: "Cámara", n: "Cámara Exterior S3 · 4MP", tag: "Vigilancia perimetral con PoE e IP66.",
+      img: "camara-exterior-s3-4mp.jpg",
+      prot: ["IP66"],
       specs: [
-        "Carga 50 kg · 60 r/min",
-        "AC110-240V · 18W",
-        "Torque 1.2 N·m",
+        "4 MP (2560×1440) · F1.6",
+        "Wi-Fi 2.4G o PoE 48V",
+        "Protección IP66",
       ],
     },
+    { id: "camara-interior-s1-2k", sku: "SC41PT", cat: "camaras", tipo: "Cámara", n: "Cámara Interior S1 · 2K", tag: "PTZ motorizada con audio bidireccional.",
+      img: "camara-interior-s1-2k.jpg",
+      prot: ["2K"],
+      specs: [
+        "3 MP (2K) · PTZ 350°/110°",
+        "Monitoreo en tiempo real",
+        "Audio de dos vías",
+      ],
+    },
+
+    /* ===== CORTINAS MOTORIZADAS ===== */
     { id: "kit-genie-cortina-3-m-4-m", cat: "cortinas", tipo: "Cortina", n: "Kit Genie · Cortina 3 m / 4 m", tag: "Kit completo Wi-Fi con riel extensible.",
       img: "kit-genie-cortina-3-m-4-m.jpg",
       prot: ["WI-FI"],
@@ -907,25 +859,8 @@ window.ALTESA_CAT = {
         "AC220-240V",
       ],
     },
-    { id: "motor-de-cortina-db28", sku: "W60CZ", cat: "cortinas", tipo: "Cortina", n: "Motor de Cortina DB28", tag: "Segunda generación ultra silenciosa.",
-      img: "motor-de-cortina-db28.jpg",
-      prot: ["ZIGBEE"],
-      specs: [
-        "AC100-240V · 50/60Hz",
-        "Marcha suave y silenciosa",
-        "Riel modular a medida",
-      ],
-    },
-    { id: "motor-de-cortina-ultra-silencioso", sku: "W40CZ", cat: "cortinas", tipo: "Cortina", n: "Motor de Cortina Ultra Silencioso", tag: "Motor AC para rieles de apertura lateral.",
-      prot: ["ZIGBEE"],
-      specs: [
-        "Carga hasta 40 kg · cortinas de 8 m",
-        "AC100-240V · relé integrado",
-        "Riel a medida disponible",
-      ],
-    },
 
-    /* ===== AUDIO Y CONTROL ===== */
+    /* ===== AUDIO AMBIENTAL ===== */
     { id: "bm2-audio-de-techo-hi-fi", sku: "LSP20", cat: "audio", tipo: "Audio", n: "BM2 · Audio de Techo Hi-Fi", tag: "Par maestro + esclavo empotrado, calidad Hi-Fi.",
       img: "bm2-audio-de-techo-hi-fi.jpg",
       prot: ["HI-FI"],
@@ -944,7 +879,9 @@ window.ALTESA_CAT = {
         "Amplía cobertura por zonas",
       ],
     },
-    { id: "magic-dot-control-ir-universal", sku: "CT30W", cat: "audio", tipo: "Otros", n: "Magic Dot · Control IR Universal", tag: "Convierte en inteligente cualquier equipo infrarrojo.",
+
+    /* ===== CONTROL DE A/C ===== */
+    { id: "magic-dot-control-ir-universal", sku: "CT30W", cat: "clima", tipo: "Otros", n: "Magic Dot · Control IR Universal", tag: "Convierte en inteligente cualquier equipo infrarrojo.",
       img: "magic-dot-control-ir-universal.jpg",
       prot: ["WI-FI"],
       specs: [

@@ -24,3 +24,6 @@ node_modules/
 
 # Intermedios de la tuberia de importacion
 tools/_work/
+
+# Caché de Python (los scripts de tools/ importan cat_ajustes.py)
+__pycache__/

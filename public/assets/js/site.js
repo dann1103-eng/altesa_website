@@ -9,7 +9,7 @@
   var CO = {
     tel:  "+503 7841-9621",
     telH: "+50378419621",
-    wa:   "50378419621",
+    wa:   "50378417972",      // WhatsApp de cotizaciones (selección y fichas)
     mail: "Monitoreo@altesa.com.sv",
     dir:  "83 Av. Norte, Edificio López Pinaud #634,<br>Colonia Escalón, San Salvador, El Salvador.",
     fb:   "https://www.facebook.com/Altesa-S-A-de-C-V-102385241423445"
@@ -437,6 +437,19 @@
     key: "altesa_seleccion_v1", ids: [], drawer: null,
     load: function () {
       try { this.ids = JSON.parse(localStorage.getItem(this.key)) || []; } catch (e) { this.ids = []; }
+      if (!Array.isArray(this.ids)) this.ids = [];
+      // Un producto retirado del catálogo no puede seguir contando en el globo
+      // de la selección de quien lo había guardado antes.
+      var C = window.ALTESA_CAT;
+      if (C) {
+        var vivos = this.ids.filter(function (id) {
+          return C.productos.some(function (p) { return p.id === id; });
+        });
+        if (vivos.length !== this.ids.length) {
+          this.ids = vivos;
+          try { localStorage.setItem(this.key, JSON.stringify(vivos)); } catch (e) {}
+        }
+      }
     },
     save: function () {
       try { localStorage.setItem(this.key, JSON.stringify(this.ids)); } catch (e) {}
@@ -957,9 +970,28 @@
     }).join(""));
   }
 
+  /* ---- Cifras del catálogo -------------------------------------------------
+     Los textos que dicen cuántos productos o códigos hay se rellenan desde los
+     datos, así no se desfasan cuando el catálogo cambia. La cifra escrita en
+     el HTML queda de respaldo si no corre el JavaScript.
+     ---------------------------------------------------------------------- */
+  function cifras() {
+    var C = window.ALTESA_CAT; if (!C) return;
+    var n = {
+      productos: C.productos.length,
+      codigos: C.productos.reduce(function (t, p) {
+        return t + Math.max(1, (p.variantes || []).length); }, 0)
+    };
+    $$("[data-cifra]").forEach(function (el) {
+      var v = n[el.getAttribute("data-cifra")];
+      if (v != null) el.textContent = v;
+    });
+  }
+
   /* ---- Arranque ------------------------------------------------------------ */
   function boot() {
     mountChrome();
+    cifras();
     SEL.init();
     mountCategorias("#cats", 9);
     mountCoverflow("#coverflow");

@@ -26,7 +26,7 @@ Reescribe `?v=` en el `<link>` y los `<script>` de las 6 páginas.
 
 ## Importar un catálogo nuevo desde PDF
 
-Así se generaron los 101 productos actuales a partir de `ALTESA_Catalogol_2026.pdf`
+Así se generaron los 91 productos actuales a partir de `ALTESA_Catalogol_2026.pdf`
 (31 páginas, 110 fichas). Se ejecuta en orden:
 
 ```bash
@@ -53,6 +53,38 @@ La regla automática obvia —«mismo prefijo antes del `·` → misma familia»
 fusionaría `Galaxy · Spotlight Ajustable` con `Galaxy · Spotlight Ultradelgado`,
 que son ópticas distintas con precio distinto. Lo mismo con las series S3, S5 y
 los parlantes BM2. Al agregar productos nuevos, revisar ese diccionario a mano.
+
+### Lo que decide ALTESA vive en `cat_ajustes.py`
+
+El PDF manda en fichas, SKUs, specs y fotos; ALTESA decide qué se publica y cómo
+se agrupa. Esas decisiones están en `tools/cat_ajustes.py`, nunca parcheadas en
+`data-catalogo.js`, para que sobrevivan a la próxima importación:
+
+| Qué | Dónde | Ejemplo de la ronda 1 |
+|---|---|---|
+| Categorías del sitio, orden y textos | `CATEGORIAS` | Seguridad se partió en Chapas, Sensores y Cámaras |
+| Mover productos de categoría | `MOVER_TIPO`, `MOVER_ID` | las tiras pasaron de Iluminación a Tiras LED |
+| Mostrar una ficha como variante de otra | `RENOMBRAR` + `FUSION_EXTRA` | Spotlight Magnético 8W, variante del de 15W |
+| Retirar productos | `EXCLUIR` | MixPad S12, 10, 12 y 4; motores de cortina DB28 |
+
+Con una ronda nueva de comentarios basta con editar ese archivo y correr
+`cat_build.py` y `cat_js.py` (los pasos anteriores solo hacen falta si cambia el
+PDF). Si una exclusión ya no encuentra su producto, o un producto queda en una
+categoría que no existe, `cat_build.py` se detiene y dice cuál.
+
+### Fotos: el emparejamiento es por posición
+
+`cat_imgs.py` asigna a cada ficha la foto más cercana por encima de su nombre.
+Hasta septiembre de 2026 descartaba las imágenes de menos de 40 pt de alto, y
+con eso perdía las fotos anchas y bajas de las luminarias lineales: cinco
+productos mostraban la foto de la tarjeta de arriba o el degradado del
+encabezado, que en el sitio se veía como tarjeta vacía. Ahora el umbral es de
+20 pt y el degradado se descarta por posición. Si una ficha nueva sale con foto
+ajena, revisar ahí primero.
+
+`cat_imgs.py` solo reescribe una foto si cambió, y `cat_build.py` rehace la
+miniatura cuando su foto es más nueva: una reimportación sin cambios no toca
+ni un archivo de `img/productos/`.
 
 ---
 
@@ -99,7 +131,7 @@ tercer tramo cierra en el encuadre inicial para que el `loop` no dé un salto.
 enteras en un lienzo 9:16 quedaban como una franja con medio teléfono en negro.
 Recortadas al centro a 3:4, la foto nítida ocupa ~73 % del alto y el resto es la
 misma foto desenfocada de fondo — el recurso habitual de Reels. Si una foto
-queda mal encuadrada, la solución es cambiarla en `CLIPS`, no aflojar el recorte:
+queda mal encuadrada, se cambia por otra en `CLIPS` y el recorte se mantiene:
 así se descartaron `compassion-01` (cortaba el rótulo) y `central-monitoreo`
 (cortaba una cabeza).
 

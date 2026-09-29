@@ -31,9 +31,15 @@ asignadas, sin_foto, vistas = 0, [], {}
 for pno, lista in sorted(por_pagina.items()):
     page = doc[pno - 1]
     infos = [i for i in page.get_image_info(xrefs=True) if i.get("xref")]
-    # descarta el degradado decorativo de la esquina y cualquier cosa muy ancha
+    # Descarta el degradado decorativo del encabezado (arranca en y=0) y lo que
+    # ocupa todo el ancho. El alto mínimo es bajo a propósito: las luminarias
+    # lineales vienen en fotos anchas y bajas (68×27 pt). Con el umbral anterior
+    # de 40 pt se descartaban y la ficha heredaba la foto de la tarjeta de
+    # arriba — o el propio degradado, que en el sitio se veía como tarjeta vacía.
     cands = [i for i in infos
-             if (i["bbox"][2] - i["bbox"][0]) < 260 and (i["bbox"][3] - i["bbox"][1]) > 40]
+             if (i["bbox"][2] - i["bbox"][0]) < 260
+             and (i["bbox"][3] - i["bbox"][1]) > 20
+             and i["bbox"][1] > 40]
 
     for pr in lista:
         col = pr["col"]
@@ -60,8 +66,12 @@ for pno, lista in sorted(por_pagina.items()):
         if h in vistas:                       # misma foto para dos fichas
             pr["img"] = vistas[h]
         else:
-            with open(os.path.join(DST, nombre), "wb") as f:
-                f.write(data)
+            ruta = os.path.join(DST, nombre)
+            # Solo se reescribe si cambió: la fecha del archivo delata qué fotos
+            # son nuevas y cat_build.py rehace únicamente esas miniaturas.
+            if not os.path.exists(ruta) or open(ruta, "rb").read() != data:
+                with open(ruta, "wb") as f:
+                    f.write(data)
             vistas[h] = nombre
             pr["img"] = nombre
         pr["img_w"], pr["img_h"] = pix.width, pix.height

@@ -45,22 +45,23 @@ CRF      = 30
 # ---- Guion de los clips -------------------------------------------------
 # slug: (foto A, foto B)  — rutas relativas a public/img/
 CLIPS = {
-    "centrales-panel":   ("proyectos/portal-la-riviera-03.jpg", "proyectos/compassion-02.jpg"),
-    "centrales-ai":      ("proyectos/casa-lp-02.jpg",           "proyectos/legion-02.jpg"),
-    "interruptores-defy":("proyectos/palmira-03.jpg",           "proyectos/compassion-04.jpg"),
-    "interruptores-bach":("proyectos/casa-lp-03.jpg",           "proyectos/portal-la-riviera-04.jpg"),
-    "iluminacion-plafon":("proyectos/ila-studio-05.jpg",        "proyectos/ila-studio-08.jpg"),
-    "iluminacion-tira":  ("proyectos/cabanas-ataco-06.jpg",     "proyectos/cabanas-ataco-01.jpg"),
-    "magnetico-spot":    ("proyectos/ila-studio-07.jpg",        "proyectos/ila-studio-06.jpg"),
-    "magnetico-riel":    ("proyectos/ila-studio-01.jpg",        "proyectos/ila-studio-02.jpg"),
-    "seguridad-chapa":   ("proyectos/cabanas-ataco-05.jpg",     "hero/hero-op1-chapa-ataco.jpg"),
-    "seguridad-camara":  ("proyectos/la-florida-01.jpg",        "proyectos/la-florida-03.jpg"),
-    "seguridad-presencia":("proyectos/compassion-04.jpg",       "proyectos/compassion-02.jpg"),
-    "cortinas-motor":    ("proyectos/cortinas-tuz-01.jpg",      "proyectos/cortinas-tuz-02.jpg"),
-    "clima":             ("proyectos/cabanas-ataco-02.jpg",     "proyectos/cabanas-ataco-07.jpg"),
-    "audio-techo":       ("proyectos/legion-03.jpg",            "proyectos/legion-04.jpg"),
-    "intro":             ("galeria/puerta-del-alma.jpg",        "galeria/showroom-exhibidor.jpg"),
-    "cierre":            ("galeria/equipo-showroom.jpg",        "galeria/showroom-exhibidor.jpg"),
+    # Portada y cierre de la vitrina
+    "intro":         ("galeria/puerta-del-alma.jpg",        "galeria/showroom-exhibidor.jpg"),
+    "cierre":        ("galeria/equipo-showroom.jpg",        "galeria/showroom-exhibidor.jpg"),
+    # Una por sección del catálogo, con el id de la categoría como nombre. Las
+    # dos fotos salen de un proyecto que tiene ese sistema instalado según
+    # data-proyectos.js, y ese proyecto es el que se acredita en pantalla.
+    "centrales":     ("proyectos/portal-la-riviera-03.jpg", "proyectos/portal-la-riviera-04.jpg"),
+    "interruptores": ("proyectos/casa-lp-04.jpg",           "proyectos/casa-lp-02.jpg"),
+    "iluminacion":   ("proyectos/ila-studio-05.jpg",        "proyectos/ila-studio-01.jpg"),
+    "tiras":         ("proyectos/legion-03.jpg",            "proyectos/legion-04.jpg"),
+    "magnetico":     ("proyectos/cerro-mar-03.jpg",         "proyectos/cerro-mar-02.jpg"),
+    "chapas":        ("proyectos/cabanas-ataco-05.jpg",     "hero/hero-op1-chapa-ataco.jpg"),
+    "sensores":      ("proyectos/compassion-04.jpg",        "proyectos/compassion-03.jpg"),
+    "camaras":       ("proyectos/la-florida-01.jpg",        "proyectos/la-florida-03.jpg"),
+    "cortinas":      ("proyectos/cortinas-tuz-01.jpg",      "proyectos/cortinas-tuz-02.jpg"),
+    "audio":         ("proyectos/portales-del-bosque-04.jpg", "proyectos/portales-del-bosque-02.jpg"),
+    "clima":         ("proyectos/cabanas-ataco-02.jpg",     "proyectos/cabanas-ataco-07.jpg"),
 }
 
 

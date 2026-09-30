@@ -23,16 +23,16 @@ Sin build, sin dependencias, sin `node_modules`. Se publica subiendo `public/`.
 ```
 public/
   index · catalogo · proyectos · servicios · profesionales · contacto  (.html)
-  reel.html                    vitrina vertical, fuera de la navegación
+  reel.html                    vitrina vertical: el catálogo en video, por secciones
   assets/css/site.css          sistema de diseño completo
   assets/css/reel.css          solo la carga reel.html
   assets/js/data-catalogo.js   ← 91 productos en 11 categorías (se genera: ver tools/)
   assets/js/data-proyectos.js  ← 12 proyectos (EDITABLE, a mano)
-  assets/js/data-reel.js       ← 14 destacados del feed (EDITABLE, a mano)
+  assets/js/data-reel.js       ← guion de cada sección de la vitrina (EDITABLE, a mano)
   assets/js/site.js            todo el comportamiento
   assets/js/reel.js            solo el feed vertical
   img/{proyectos,productos,galeria,hero,reel,brand,placeholder}/
-  video/reel/                  16 clips 9:16 generados — ver tools/README.md
+  video/reel/                  13 clips 9:16, uno por sección — ver tools/README.md
 tools/                         scripts de mantenimiento — ver tools/README.md
 ```
 
@@ -77,15 +77,26 @@ sistemas») y las `meta description` hay que cambiarlas a mano.
 
 ## La vitrina vertical (`/reel.html`)
 
-Feed tipo TikTok con 14 productos destacados, uno por pantalla, montado sobre el
-mismo catálogo y el mismo carrito que el resto del sitio. Vive **fuera del menú**
-a propósito: se enseña con el enlace directo.
+El catálogo en formato tipo TikTok: **una pantalla por sección** (Centrales,
+Tiras LED, Cortinas, Cámaras…), en el mismo orden que `catalogo.html`, más una
+portada y un cierre. El botón «Catálogo» de cada pantalla abre ahí mismo los
+productos de esa sección; tocar uno abre su ficha encima.
 
-- URLs: `/reel.html`, y `/reel` y `/vitrina` por los *rewrites* de `vercel.json`
-- Lleva `noindex`: no aparece en buscadores
-- Dos atajos para llegar sin teclear la URL en una demostración: dejar pulsado el
-  isotipo del encabezado ~0.8 s, o teclear `reel` fuera de un campo de texto
-  (ambos en `puertaVitrina()`, dentro de `site.js`)
+Las secciones **no se enumeran en `data-reel.js`**: salen de `ALTESA_CAT.categorias`.
+Una categoría nueva en `tools/cat_ajustes.py` aparece sola en la vitrina, con su
+foto de portada en lugar de clip. `data-reel.js` solo pone el guion de cada una
+(titular, frase, datos, clip y proyecto del ambiente). El crédito de ambiente se
+lee de `data-proyectos.js` para que nombre y lugar sean los reales.
+
+- Entradas desde el sitio: «Ver en video» junto a «Explorar los productos» en la
+  portada, y «Ver el catálogo en video» en la cabecera del catálogo, que apunta a
+  la sección elegida (`reel.html#tiras`) — lo actualiza `CATALOGO.sync()`.
+- URLs: `/reel.html`, y `/reel` y `/vitrina` por los *rewrites* de `vercel.json`.
+  `#<categoría>` abre esa sección; los enlaces viejos a un producto
+  (`#cerradura-v5-face`) caen en la sección de ese producto.
+- Lleva `noindex`: los clips todavía son de muestra.
+- Siguen los dos atajos de demostración: dejar pulsado el isotipo ~0.8 s, o
+  teclear `reel` (`puertaVitrina()`, en `site.js`).
 
 **Cómo se integra con lo que ya existía.** `reel.html` marca el `<body>` con
 `data-nochrome` y por eso `mountChrome()` se salta el encabezado y el pie; el
@@ -94,28 +105,31 @@ páginas, así que «Mi selección» es literalmente el mismo objeto `SEL`: mism
 `localStorage`, mismo cajón lateral y mismo mensaje de WhatsApp. `reel.js`
 envuelve `SEL.save` para enterarse de los cambios que ocurren dentro del cajón.
 
-Los botones del feed llevan `data-toggle`. Hay que mantenerlos fuera de
-`data-add`: `SEL.syncButtons()` reescribe el `innerHTML` de todo `[data-add]` y
-borraría las etiquetas del carril.
+Guardar se hace producto a producto, con el `+` del catálogo de cada sección.
+Esos botones llevan `data-add` a propósito: `SEL.syncButtons()` les pinta el `+`
+o el ✓ igual que en la rejilla del catálogo.
 
 **Una sola salida.** Dentro de la vitrina nada navega a otra página salvo el
-botón «Ir al sitio» de la cabecera (arriba a la derecha). La ficha de producto
-se abre en el mismo cajón del catálogo (`ALTESA.CATALOGO.detail`, que crea el
-cajón si la página no tiene rejilla) y la selección vacía ofrece «Seguir
-viendo» en lugar de «Ir al catálogo» (`SEL.enVitrina`). Los enlaces a WhatsApp
-y correo sí se mantienen: abren otra app y la vitrina queda donde estaba.
+botón «Ir al sitio» de la cabecera (arriba a la derecha). El catálogo de la
+sección es un cajón propio (`ALTESA.Drawer`), la ficha usa el del catálogo
+(`ALTESA.CATALOGO.detail`, que lo crea si la página no tiene rejilla) y la
+selección vacía ofrece «Seguir viendo» en lugar de «Ir al catálogo»
+(`SEL.enVitrina`). Los enlaces a WhatsApp y correo sí se mantienen: abren otra
+app y la vitrina queda donde estaba.
 
-Cada cajón anuncia `cajon:abierto` y `cajon:cerrado`. La vitrina los usa para
-meter una entrada en el historial al abrir, así el gesto de «atrás» del
-teléfono cierra el cajón en vez de sacar al usuario; también pausa el clip
-mientras el cajón está abierto.
+Los cajones se **apilan** (catálogo de la sección → ficha encima). Cada uno
+anuncia `cajon:abierto` y `cajon:cerrado`; la vitrina lleva la pila y mete una
+entrada en el historial por cajón, así el «atrás» del teléfono cierra solo el de
+arriba. Cerrar con la X devuelve su entrada con un `history.back()` propio que el
+manejador de `popstate` ignora. El clip queda en pausa mientras haya un cajón.
 
-**Video.** No hay material de producto todavía. Los 16 clips los arma
-`tools/reel_media.py` reencuadrando fotografía propia de proyectos ALTESA a 9:16
-con movimiento lento. Por eso cada ficha acredita el ambiente («Ambiente ·
-Portal la Riviera») en lugar de dar a entender que ese SKU está instalado ahí, y
-hay un aviso permanente al pie. Solo se descarga el clip de la diapositiva activa
-y sus dos vecinas: el feed abre con ~90 KB en lugar de los 9.8 MB del total.
+**Video.** No hay material de producto todavía. Los 13 clips (uno por sección,
+más portada y cierre) los arma `tools/reel_media.py` reencuadrando fotografía de
+un proyecto que tiene ese sistema instalado, y la pantalla acredita ese proyecto
+(«Ambiente · Cerro Mar · Surf City»). Hay un aviso permanente al pie. El clip de
+cada sección se llama como la categoría (`cortinas.mp4`), así que el video real
+del cliente entra con solo reemplazar el archivo. Solo se descarga el clip de la
+pantalla activa y sus dos vecinas.
 
 ## Sistema de diseño
 
@@ -187,7 +201,7 @@ ronda 1 de ajustes de ALTESA (29 sep 2026) ·
 - Los tres niveles de paquete de la página Profesionales son una propuesta de
   estructura, no política comercial confirmada.
 - Los formularios no envían a ningún buzón.
-- Los **16 clips de la vitrina** son fotografía de proyectos reencuadrada a 9:16
+- Los **13 clips de la vitrina** son fotografía de proyectos reencuadrada a 9:16
   con movimiento lento. Sirven para enseñar el formato; el video de producto
   está pendiente de producción.
 

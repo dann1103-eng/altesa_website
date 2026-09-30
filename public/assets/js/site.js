@@ -631,6 +631,9 @@
       var et = $("#tipoActual"), tog = $("#tipoTog");
       if (et) et.textContent = this.amb === "todos" ? "Todos" : this.amb;
       if (tog) tog.setAttribute("data-on", this.amb === "todos" ? "0" : "1");
+      // «Ver en video» abre la vitrina en la sección que se está mirando
+      var av = $("#aVitrina");
+      if (av) av.setAttribute("href", "reel.html" + (this.cat === "todas" ? "" : "#" + this.cat));
       // La categoría activa se trae a la vista dentro de la fila deslizable
       var act = $('#chipsCat .chip[aria-pressed="true"]');
       if (act && act.scrollIntoView) act.scrollIntoView({ block: "nearest", inline: "nearest" });
@@ -1036,5 +1039,5 @@
   if (document.readyState === "loading") document.addEventListener("DOMContentLoaded", boot);
   else boot();
 
-  window.ALTESA = { LB: LB, SEL: SEL, CO: CO, I: I, CATALOGO: CATALOGO };
+  window.ALTESA = { LB: LB, SEL: SEL, CO: CO, I: I, CATALOGO: CATALOGO, Drawer: Drawer };
 })();

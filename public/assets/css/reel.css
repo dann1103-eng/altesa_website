@@ -144,21 +144,6 @@
 }
 .rs.is-paused .rs__pause span{transform:scale(1)}
 
-/* Corazón del doble toque */
-.rs__pop{
-  position:absolute; z-index:4; left:50%; top:46%;
-  translate:-50% -50%; scale:.4; opacity:0;
-  color:var(--plum-2); pointer-events:none;
-  filter:drop-shadow(0 0 26px rgba(216,71,159,.85));
-}
-.rs__pop.is-on{animation:rsPop .72s var(--ease) forwards}
-@keyframes rsPop{
-  0%{scale:.4;opacity:0}
-  32%{scale:1.12;opacity:1}
-  62%{scale:.98;opacity:1}
-  100%{scale:1.3;opacity:0}
-}
-
 /* ---------- 5. Ficha sobre el clip --------------------------------------- */
 .rs__info{
   position:absolute; z-index:3;
@@ -195,7 +180,7 @@
   -webkit-backdrop-filter:blur(10px); backdrop-filter:blur(10px);
 }
 
-/* Renglón de producto: miniatura real del catálogo + SKU */
+/* «Ver el catálogo»: miniaturas reales de la sección + cuántos productos */
 .rs__prod{
   display:flex; align-items:center; gap:.66rem;
   padding:.42rem .9rem .42rem .42rem; margin-top:.15rem;
@@ -207,10 +192,13 @@
 }
 .rs__prod:hover{background:rgba(255,255,255,.18)}
 button.rs__prod{text-align:left;color:inherit}
-.rs__prod img{
-  width:36px; height:36px; border-radius:var(--pill);
-  object-fit:cover; background:var(--paper); flex:none;
+.rs__pila{display:flex;flex:none}
+.rs__pila img{
+  width:36px; height:36px; border-radius:var(--pill); flex:none;
+  object-fit:contain; padding:3px; background:var(--paper);
+  box-shadow:0 0 0 2px rgba(18,18,24,.85);
 }
+.rs__pila img + img{margin-left:-11px}
 .rs__prod__txt{display:block;min-width:0}
 .rs__prod b{
   display:block; font-size:.8rem; font-weight:600; line-height:1.25;
@@ -250,10 +238,50 @@ button.rs__prod{text-align:left;color:inherit}
   text-transform:uppercase; color:rgba(244,241,243,.82);
   text-shadow:0 1px 6px rgba(0,0,0,.75);
 }
-.ract--add.is-on{color:var(--plum-2)}
-.ract--add.is-on span{color:var(--plum-3)}
-.ract--add.is-on svg{filter:drop-shadow(0 0 12px rgba(216,71,159,.8))}
-.ract--wa.is-on,.ract--wa{color:#8FE6A8}
+.ract--cat{color:#fff}
+.ract--cat span{color:#fff}
+.ract--wa{color:#8FE6A8}
+
+/* ---------- 6b. Catálogo de la sección (cajón) --------------------------
+   Lista compacta: en Iluminación son 40 productos y una rejilla de tarjetas
+   haría eterno el desplazamiento. Tocar un renglón abre la ficha encima. */
+.cp{display:grid;gap:.45rem;padding-top:1.3rem}
+.cp__serie{
+  font-family:var(--f-mono); font-size:.6rem; letter-spacing:.16em;
+  text-transform:uppercase; color:var(--plum);
+}
+.cp__n{
+  font-family:var(--f-display); font-weight:600; letter-spacing:-.02em;
+  font-size:clamp(1.5rem,5.4vw,1.95rem); line-height:1.1;
+}
+.cp__desc{font-size:.9rem;line-height:1.55;color:var(--tx-mid)}
+.cp__cuenta{font-size:.78rem;font-weight:600;margin-top:.5rem}
+.cp__lista{display:grid;border-top:1px solid var(--hair-light)}
+.cp__item{
+  display:flex; align-items:center; gap:.7rem;
+  padding:.65rem 0; border-bottom:1px solid var(--hair-light);
+}
+.cp__abrir{
+  flex:1; min-width:0; display:flex; align-items:center; gap:.85rem;
+  text-align:left; padding:.25rem; margin:-.25rem;
+  border-radius:var(--radius); transition:background .25s var(--ease-2);
+}
+.cp__abrir:hover{background:var(--paper-2)}
+.cp__abrir img{
+  width:64px; height:64px; flex:none; object-fit:contain; padding:4px;
+  background:#fff; border:1px solid var(--hair-light); border-radius:12px;
+}
+.cp__txt{min-width:0;display:grid;gap:.12rem}
+.cp__txt b{font-size:.92rem;font-weight:600;line-height:1.25}
+.cp__txt small{
+  font-size:.8rem; line-height:1.4; color:var(--tx-mid);
+  display:-webkit-box; -webkit-line-clamp:2; -webkit-box-orient:vertical; overflow:hidden;
+}
+.cp__txt em{
+  font-style:normal; font-family:var(--f-mono); font-size:.63rem;
+  letter-spacing:.04em; color:var(--tx-mid);
+}
+.cp__add{width:38px;height:38px}
 
 /* ---------- 7. Diapositivas de apertura y cierre ------------------------- */
 .rs--card .rs__info{
@@ -415,5 +443,4 @@ button.rs__prod{text-align:left;color:inherit}
 
 /* ---------- 12. Menos movimiento ----------------------------------------- */
 .motion-off .reel__hint__d i{animation:none}
-.motion-off .rs__pop.is-on{animation-duration:.3s}
 .motion-off .reel__bg i{transition:none}

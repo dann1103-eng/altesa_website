@@ -112,7 +112,7 @@ y ninguna página los enlaza. Viven solo en la máquina de Daniel.
 
 ```bash
 python tools/reel_media.py            # arma los que falten
-python tools/reel_media.py --force    # rehace los 16
+python tools/reel_media.py --force    # rehace los 13
 ```
 
 Genera `public/video/reel/*.mp4` (720×1280, H.264, sin audio, ~10 s, ~600 KB)
@@ -124,7 +124,9 @@ winget install Gyan.FFmpeg
 
 El material de origen son las fotos de `img/proyectos/`, `img/galeria/` e
 `img/hero/`; el guion de qué foto va en cada clip está en el diccionario
-`CLIPS` al inicio del script. Cada clip es A → B → A con disolvencias, y el
+`CLIPS` al inicio del script. Hay un clip por sección del catálogo, con el id de
+la categoría como nombre, y sus dos fotos salen de un proyecto que tiene ese
+sistema instalado según `data-proyectos.js`: la vitrina acredita ese proyecto. Cada clip es A → B → A con disolvencias, y el
 tercer tramo cierra en el encuadre inicial para que el `loop` no dé un salto.
 
 **Por qué el recorte a 3:4.** Las fotos del dossier son 16:9 y 5:4. Metidas
@@ -136,4 +138,5 @@ así se descartaron `compassion-01` (cortaba el rótulo) y `central-monitoreo`
 (cortaba una cabeza).
 
 **Cuando lleguen videos reales del cliente:** dejar el `.mp4` en
-`public/video/reel/` con el mismo nombre de clip. Nada más cambia.
+`public/video/reel/` con el nombre de su sección (`cortinas.mp4`, `tiras.mp4`…).
+Nada más cambia. Una sección sin clip muestra su foto de portada.

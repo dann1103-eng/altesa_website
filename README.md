@@ -29,7 +29,7 @@ Luego abrir <http://localhost:5173>.
 | Servicios | `public/servicios.html` | Proceso de 5 etapas + 6 servicios |
 | Profesionales | `public/profesionales.html` | Programa de aliados B2B (decoradoras, arquitectos, inmobiliarias) |
 | Contacto | `public/contacto.html` | Datos reales + formulario |
-| **Vitrina** | `public/reel.html` | Feed vertical tipo TikTok con 14 destacados en video — fuera del menú |
+| **Vitrina** | `public/reel.html` | El catálogo en video tipo TikTok: una pantalla por sección |
 
 **Función destacada:** en el catálogo, cada producto se puede agregar a **Mi selección**
 (ícono `+`). El botón del encabezado abre la lista y genera un mensaje de WhatsApp o
@@ -39,28 +39,33 @@ navegador.
 
 ### La vitrina vertical — `/reel.html`
 
-Recorrido tipo TikTok: un producto destacado por pantalla, con su clip en 9:16 y
-los botones de guardar, ficha, compartir y WhatsApp al costado. Funciona igual
-con el pulgar en el teléfono que con la rueda del ratón en la computadora.
+El catálogo en formato tipo TikTok: **una pantalla por cada sección** del
+catálogo —Centrales, Interruptores, Iluminación, Tiras LED, Magnético, Chapas,
+Sensores, Cámaras, Cortinas, Audio y Control de A/C—, con su clip en 9:16 y los
+botones **Catálogo**, Enviar y WhatsApp al costado. «Catálogo» abre ahí mismo los
+productos de esa sección, cada uno con su `+` para guardarlo y su ficha completa.
+Funciona igual con el pulgar en el teléfono que con la rueda del ratón.
 
-Queda **fuera de la navegación** a propósito. Se llega de tres maneras:
+Cómo se llega:
 
 | Cómo | Dónde |
 |---|---|
-| Enlace directo | `altesa-website.vercel.app/reel` — también `/vitrina` y `/reel.html` |
-| Pulsación larga | ~0.8 s sobre el isotipo del encabezado, en cualquier página |
-| Teclado | escribir `reel` fuera de un campo de texto |
+| Portada | botón **Ver en video**, junto a «Explorar los productos» |
+| Catálogo | botón **Ver el catálogo en video**, en la cabecera: abre la sección que se esté mirando |
+| Enlace directo | `altesa-website.vercel.app/reel` — `/reel#cortinas` abre directo una sección |
 
 Lo que se guarda ahí es **la misma** «Mi selección» del catálogo: se puede empezar
 en la vitrina, seguir en el catálogo y mandar una sola cotización por WhatsApp.
 
-Dentro de la vitrina todo se abre ahí mismo —la ficha de cada producto, la
-selección— y el «atrás» del teléfono cierra lo que esté abierto. La única salida
+Dentro de la vitrina todo se abre ahí mismo —el catálogo de la sección, la ficha
+de cada producto, la selección— y el «atrás» del teléfono cierra lo que esté
+abierto, de a uno. La única salida
 al resto del sitio es el botón **Ir al sitio**, arriba a la derecha.
 
 Los clips son fotografía de proyectos ALTESA reencuadrada a vertical con
-movimiento lento, y así se acredita en pantalla. Cuando haya video de producto,
-se sustituye el `.mp4` en `public/video/reel/` y ya. Ver `tools/README.md`.
+movimiento lento, y así se acredita en pantalla. Cada uno se llama como su
+sección: cuando haya video real, se reemplaza `public/video/reel/cortinas.mp4`
+(o el que toque) y ya. Ver `tools/README.md`.
 
 ---
 
@@ -114,17 +119,17 @@ altesa website/
 └─ public/
    ├─ index.html  catalogo.html  proyectos.html
    ├─ servicios.html  profesionales.html  contacto.html
-   ├─ reel.html                   vitrina vertical (fuera del menú)
+   ├─ reel.html                   vitrina vertical: el catálogo en video
    ├─ assets/
    │  ├─ css/site.css             sistema de diseño completo
    │  ├─ css/reel.css             solo para la vitrina
    │  └─ js/
    │     ├─ data-catalogo.js      ← 91 productos y 11 categorías (se genera desde el PDF)
    │     ├─ data-proyectos.js     ← 12 proyectos (EDITABLE)
-   │     ├─ data-reel.js          ← 14 destacados de la vitrina (EDITABLE)
+   │     ├─ data-reel.js          ← guion de cada sección de la vitrina (EDITABLE)
    │     ├─ site.js               comportamiento
    │     └─ reel.js               solo la vitrina
-   ├─ video/reel/                 16 clips 9:16 generados
+   ├─ video/reel/                 13 clips 9:16, uno por sección
    └─ img/
       ├─ reel/                    pósters de los clips
       ├─ proyectos/               47 fotos web (1600 px)

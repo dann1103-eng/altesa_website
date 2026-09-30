@@ -64,7 +64,10 @@
 }
 .rbtn:hover{background:rgba(255,255,255,.19)}
 .rbtn:active{transform:scale(.95)}
-.rbtn--back span{display:none}
+.reel__acc{display:flex;align-items:center;gap:.45rem}
+/* La salida al sitio se distingue del resto: es la única que deja la vitrina */
+.rbtn--sitio{padding:0 .85rem 0 .95rem;background:rgba(255,255,255,.9);border-color:transparent;color:var(--tx-dark)}
+.rbtn--sitio:hover{background:#fff}
 .rbtn--bag{position:relative;padding:0 .7rem}
 .rbtn--bag b{
   font-family:var(--f-mono); font-size:.7rem; font-weight:500;
@@ -203,11 +206,12 @@
   max-width:100%;
 }
 .rs__prod:hover{background:rgba(255,255,255,.18)}
+button.rs__prod{text-align:left;color:inherit}
 .rs__prod img{
   width:36px; height:36px; border-radius:var(--pill);
   object-fit:cover; background:var(--paper); flex:none;
 }
-.rs__prod div{min-width:0}
+.rs__prod__txt{display:block;min-width:0}
 .rs__prod b{
   display:block; font-size:.8rem; font-weight:600; line-height:1.25;
   white-space:nowrap; overflow:hidden; text-overflow:ellipsis;
@@ -221,7 +225,6 @@
   display:inline-flex; align-items:center; gap:.34rem;
 }
 .rs__amb b{font-weight:500;color:rgba(244,241,243,.72)}
-a.rs__amb:hover b{color:var(--plum-3)}
 
 /* ---------- 6. Carril de acciones ---------------------------------------- */
 .rs__rail{
@@ -350,7 +353,6 @@ a.rs__amb:hover b{color:var(--plum-3)}
    así queda pegado al borde de la tarjeta sin cálculos de posición.
    ------------------------------------------------------------------------- */
 @media (min-width:900px){
-  .rbtn--back span{display:inline}
 
   .rs__in{
     display:flex; align-items:center; justify-content:center;

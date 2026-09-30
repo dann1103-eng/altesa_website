@@ -98,6 +98,18 @@ Los botones del feed llevan `data-toggle`. Hay que mantenerlos fuera de
 `data-add`: `SEL.syncButtons()` reescribe el `innerHTML` de todo `[data-add]` y
 borraría las etiquetas del carril.
 
+**Una sola salida.** Dentro de la vitrina nada navega a otra página salvo el
+botón «Ir al sitio» de la cabecera (arriba a la derecha). La ficha de producto
+se abre en el mismo cajón del catálogo (`ALTESA.CATALOGO.detail`, que crea el
+cajón si la página no tiene rejilla) y la selección vacía ofrece «Seguir
+viendo» en lugar de «Ir al catálogo» (`SEL.enVitrina`). Los enlaces a WhatsApp
+y correo sí se mantienen: abren otra app y la vitrina queda donde estaba.
+
+Cada cajón anuncia `cajon:abierto` y `cajon:cerrado`. La vitrina los usa para
+meter una entrada en el historial al abrir, así el gesto de «atrás» del
+teléfono cierra el cajón en vez de sacar al usuario; también pausa el clip
+mientras el cajón está abierto.
+
 **Video.** No hay material de producto todavía. Los 16 clips los arma
 `tools/reel_media.py` reencuadrando fotografía propia de proyectos ALTESA a 9:16
 con movimiento lento. Por eso cada ficha acredita el ambiente («Ambiente ·

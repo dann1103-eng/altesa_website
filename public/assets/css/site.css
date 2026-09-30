@@ -551,6 +551,9 @@ h1,h2,h3,h4,p,figure{margin:0}
 .drawer{
   position:fixed;top:0;right:0;bottom:0;z-index:95;
   width:min(560px,100vw);background:var(--paper);
+  /* Superficie clara con texto propio: en la vitrina, de fondo oscuro, el
+     cajón heredaba texto claro y el título y la X quedaban invisibles. */
+  color:var(--tx-dark);
   display:flex;flex-direction:column;
   transform:translateX(101%);transition:transform .6s var(--ease);
   box-shadow:-30px 0 70px -30px rgba(11,11,14,.5);

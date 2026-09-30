@@ -54,6 +54,10 @@ Queda **fuera de la navegación** a propósito. Se llega de tres maneras:
 Lo que se guarda ahí es **la misma** «Mi selección» del catálogo: se puede empezar
 en la vitrina, seguir en el catálogo y mandar una sola cotización por WhatsApp.
 
+Dentro de la vitrina todo se abre ahí mismo —la ficha de cada producto, la
+selección— y el «atrás» del teléfono cierra lo que esté abierto. La única salida
+al resto del sitio es el botón **Ir al sitio**, arriba a la derecha.
+
 Los clips son fotografía de proyectos ALTESA reencuadrada a vertical con
 movimiento lento, y así se acredita en pantalla. Cuando haya video de producto,
 se sustituye el `.mp4` en `public/video/reel/` y ya. Ver `tools/README.md`.

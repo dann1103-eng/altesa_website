@@ -38,9 +38,6 @@
   function catDe(id) {
     return C.categorias.filter(function (c) { return c.id === id; })[0] || {};
   }
-  function proyDe(id) {
-    return (window.ALTESA_PROY || []).filter(function (p) { return p.id === id; })[0];
-  }
   function fotoProd(p) {
     return "img/productos/th/" + (p.img || p.id + ".jpg");
   }
@@ -72,19 +69,15 @@
             '<div class="rs__acts">' +
               (s.tipo === "intro"
                 ? '<button class="btn" type="button" data-next><span>Empezar</span>' +
-                  '<svg class="arw" width="14" height="10" viewBox="0 0 14 10" fill="none"><path d="M0 5h12M8.5 1.2 12.8 5 8.5 8.8" stroke="currentColor" stroke-width="1.3"/></svg></button>' +
-                  '<a class="btn btn--ghost" href="catalogo.html"><span>Catálogo completo</span></a>'
+                  '<svg class="arw" width="14" height="10" viewBox="0 0 14 10" fill="none"><path d="M0 5h12M8.5 1.2 12.8 5 8.5 8.8" stroke="currentColor" stroke-width="1.3"/></svg></button>'
                 : '<a class="btn" id="cierreWa" href="#" target="_blank" rel="noopener"><span>Cotizar por WhatsApp</span>' +
                   '<svg class="arw" width="14" height="10" viewBox="0 0 14 10" fill="none"><path d="M0 5h12M8.5 1.2 12.8 5 8.5 8.8" stroke="currentColor" stroke-width="1.3"/></svg></a>' +
-                  '<a class="btn btn--ghost" href="catalogo.html"><span>Ver los ' + C.productos.length +
-                  " productos</span></a>") +
+                  '<button class="btn btn--ghost" type="button" data-inicio><span>Volver al inicio</span></button>') +
             "</div>";
     } else {
       var chips = s.chips || (p.specs || []).slice(0, 3);
-      var proy = s.ambiente && s.ambiente.proy ? proyDe(s.ambiente.proy) : null;
       var amb = s.ambiente && s.ambiente.cred
-        ? (proy ? '<a class="rs__amb" href="proyectos.html#' + proy.id + '">' : '<span class="rs__amb">') +
-          "Ambiente · <b>" + esc(s.ambiente.cred) + "</b>" + (proy ? "</a>" : "</span>")
+        ? '<span class="rs__amb">Ambiente · <b>' + esc(s.ambiente.cred) + "</b></span>"
         : "";
 
       txt = '<p class="rs__cat">' + esc(s.cat || catDe(p.cat).corta || "") + "</p>" +
@@ -92,10 +85,10 @@
             '<p class="rs__linea">' + esc(s.linea) + "</p>" +
             '<div class="rs__chips">' + chips.map(function (c) {
               return "<span>" + esc(c) + "</span>"; }).join("") + "</div>" +
-            '<a class="rs__prod" href="catalogo.html?p=' + esc(p.id) + '">' +
-              '<img src="' + esc(fotoProd(p)) + '" alt="' + esc(p.n) + '" loading="lazy" decoding="async" ' +
+            '<button class="rs__prod" type="button" data-ficha="' + esc(p.id) + '">' +
+              '<img src="' + esc(fotoProd(p)) + '" alt="" loading="lazy" decoding="async" ' +
                 'data-fb="img/productos/' + esc(p.img || p.id + ".jpg") + '">' +
-              "<div><b>" + esc(p.n) + "</b><small>" + esc(p.sku) + "</small></div></a>" +
+              '<span class="rs__prod__txt"><b>' + esc(p.n) + "</b><small>" + esc(p.sku) + "</small></span></button>" +
             amb;
     }
 
@@ -185,7 +178,7 @@
 
     var s = slides[i];
     var h = s.pid || (s.tipo === "intro" ? "" : "final");
-    try { history.replaceState(null, "", h ? "#" + h : location.pathname); } catch (e) {}
+    try { history.replaceState(history.state, "", h ? "#" + h : location.pathname); } catch (e) {}
   }
 
   function reproducir(i) {
@@ -313,11 +306,39 @@
     document.getElementById("selOpen").click();
   });
 
-  /* ---- Ficha y compartir --------------------------------------------------- */
+  /* ---- Ficha y compartir ---------------------------------------------------
+     La ficha se abre aquí dentro, en el mismo cajón del catálogo. La única
+     salida al sitio es «Ir al sitio», arriba a la derecha. */
+  SEL.enVitrina = true;
+
   $$("[data-ficha]", feed).forEach(function (b) {
-    b.addEventListener("click", function () {
-      location.href = "catalogo.html?p=" + b.getAttribute("data-ficha");
-    });
+    b.addEventListener("click", function () { A.CATALOGO.detail(b.getAttribute("data-ficha")); });
+  });
+
+  var inicio = $("[data-inicio]", feed);
+  if (inicio) inicio.addEventListener("click", function () {
+    secs[0].scrollIntoView({ behavior: "smooth", block: "center" });
+  });
+
+  /* ---- Cajones: el «atrás» del teléfono los cierra -------------------------
+     Al abrir un cajón (ficha o selección) se agrega una entrada al historial;
+     el gesto o botón de «atrás» la consume y cierra el cajón en lugar de sacar
+     al usuario de la vitrina. Mientras el cajón está abierto el clip se pausa. */
+  var cierrePorAtras = false;
+  document.addEventListener("cajon:abierto", function () {
+    if (!(history.state && history.state.cajon)) {
+      try { history.pushState({ cajon: true }, "", location.href); } catch (e) {}
+    }
+    if (vids[actual]) vids[actual].pause();
+  });
+  document.addEventListener("cajon:cerrado", function () {
+    if (cierrePorAtras) cierrePorAtras = false;
+    else if (history.state && history.state.cajon) history.back();
+    if (autoOK && !$(".drawer.is-on")) reproducir(actual);
+  });
+  window.addEventListener("popstate", function () {
+    var x = $(".drawer.is-on .drawer__x");
+    if (x) { cierrePorAtras = true; x.click(); }
   });
 
   $$("[data-share]", feed).forEach(function (b) {
@@ -370,7 +391,7 @@
 
   // Al volver de otra pestaña, retomar el clip activo
   document.addEventListener("visibilitychange", function () {
-    if (document.visibilityState === "visible" && autoOK) reproducir(actual);
+    if (document.visibilityState === "visible" && autoOK && !$(".drawer.is-on")) reproducir(actual);
     else if (vids[actual]) vids[actual].pause();
   });
 

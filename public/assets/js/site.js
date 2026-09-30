@@ -7,9 +7,9 @@
 
   /* ---- Datos de contacto (fuente única) -------------------------------- */
   var CO = {
-    tel:  "+503 7841-9621",
-    telH: "+50378419621",
-    wa:   "50378417972",      // WhatsApp de cotizaciones (selección y fichas)
+    tel:  "+503 7841-7972",
+    telH: "+50378417972",
+    wa:   "50378417972",
     mail: "Monitoreo@altesa.com.sv",
     dir:  "83 Av. Norte, Edificio López Pinaud #634,<br>Colonia Escalón, San Salvador, El Salvador.",
     fb:   "https://www.facebook.com/Altesa-S-A-de-C-V-102385241423445"
@@ -415,13 +415,19 @@
     var api = {
       el: d, scrim: scrim,
       body: $(".drawer__bd", d), foot: $(".drawer__ft", d), head: $(".drawer__hd h2", d),
+      // Abrir y cerrar se anuncian con un evento: la vitrina lo usa para que
+      // el gesto de «atrás» del teléfono cierre el cajón en vez de salir.
       open: function () {
+        var ya = d.classList.contains("is-on");
         d.classList.add("is-on"); scrim.classList.add("is-on");
         document.body.style.overflow = "hidden"; api.body.scrollTop = 0;
+        if (!ya) d.dispatchEvent(new CustomEvent("cajon:abierto", { bubbles: true }));
       },
       close: function () {
+        var ya = d.classList.contains("is-on");
         d.classList.remove("is-on"); scrim.classList.remove("is-on");
         if (!$(".drawer.is-on")) document.body.style.overflow = "";
+        if (ya) d.dispatchEvent(new CustomEvent("cajon:cerrado", { bubbles: true }));
       }
     };
     $(".drawer__x", d).addEventListener("click", api.close);
@@ -435,6 +441,7 @@
   /* ---- Mi selección ------------------------------------------------------ */
   var SEL = {
     key: "altesa_seleccion_v1", ids: [], drawer: null,
+    enVitrina: false,   // reel.js lo activa: ahí ningún botón saca de la página
     load: function () {
       try { this.ids = JSON.parse(localStorage.getItem(this.key)) || []; } catch (e) { this.ids = []; }
       if (!Array.isArray(this.ids)) this.ids = [];
@@ -493,8 +500,12 @@
         d.body.innerHTML =
           '<div class="sel__empty">' + I.bag.replace('width="15" height="15"', 'width="40" height="40"') +
           "<p>Todavía no hay productos en tu selección.</p>" +
-          '<p style="margin-top:.6rem"><a class="linkline" href="catalogo.html">Ir al catálogo ' + I.arw + "</a></p></div>";
+          '<p style="margin-top:.6rem">' + (this.enVitrina
+            ? '<button class="linkline" type="button" id="selSeguir">Seguir viendo ' + I.arw + "</button>"
+            : '<a class="linkline" href="catalogo.html">Ir al catálogo ' + I.arw + "</a>") + "</p></div>";
         d.foot.innerHTML = "";
+        var seguir = $("#selSeguir");
+        if (seguir) seguir.addEventListener("click", d.close);
         return;
       }
       d.body.innerHTML = '<div class="sel__list">' + items.map(function (p) {
@@ -683,7 +694,8 @@
       var C = window.ALTESA_CAT;
       var p = C.productos.filter(function (x) { return x.id === id; })[0]; if (!p) return;
       var c = catDe(p.cat);
-      var d = this.drawer;
+      // El cajón nace con la rejilla del catálogo; la vitrina lo pide sin ella
+      var d = this.drawer || (this.drawer = Drawer("prodDrawer", "Ficha de producto"));
       d.head.textContent = c.corta || "Producto";
 
       var vars = p.variantes || [];
@@ -1024,5 +1036,5 @@
   if (document.readyState === "loading") document.addEventListener("DOMContentLoaded", boot);
   else boot();
 
-  window.ALTESA = { LB: LB, SEL: SEL, CO: CO, I: I };
+  window.ALTESA = { LB: LB, SEL: SEL, CO: CO, I: I, CATALOGO: CATALOGO };
 })();

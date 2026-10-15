@@ -265,19 +265,16 @@
     var els = $$("[data-mo], [data-rv], .lightline, .rail");
     if (!("IntersectionObserver" in window)) {
       els.forEach(function (e) { e.classList.add("is-in"); });
-      $$("[data-odo]").forEach(rollOdometer);
       return;
     }
     var io = new IntersectionObserver(function (entries) {
       entries.forEach(function (en) {
         if (!en.isIntersecting) return;
         en.target.classList.add("is-in");
-        if (en.target.hasAttribute("data-odo")) rollOdometer(en.target);
         io.unobserve(en.target);
       });
     }, { threshold: 0.12, rootMargin: "0px 0px -8% 0px" });
     els.forEach(function (e) { io.observe(e); });
-    $$("[data-odo]").forEach(function (e) { io.observe(e); });
 
     // Red de seguridad: si el observer no llega a disparar (pestaña en segundo
     // plano, motor sin render), nada debe quedarse invisible dentro de la vista.
@@ -286,10 +283,6 @@
         $$("[data-mo]:not(.is-in), [data-rv]:not(.is-in)").forEach(function (e) {
           var r = e.getBoundingClientRect();
           if (r.top < window.innerHeight && r.bottom > 0) e.classList.add("is-in");
-        });
-        $$("[data-odo]").forEach(function (e) {
-          var r = e.getBoundingClientRect();
-          if (r.top < window.innerHeight && r.bottom > 0) rollOdometer(e);
         });
       }, 1200);
     });
@@ -318,25 +311,6 @@
       if (!ticking) { ticking = true; requestAnimationFrame(frame); }
     }, { passive: true });
     frame();
-  }
-
-  /* ---- Contador de dígitos rodantes -------------------------------------- */
-  function buildOdometer(host) {
-    var valor = host.getAttribute("data-odo") || "0";
-    host.innerHTML = valor.split("").map(function (ch, i) {
-      if (!/[0-9]/.test(ch)) return '<span class="odo__fix">' + esc(ch) + "</span>";
-      var reel = "";
-      for (var d = 0; d <= 9; d++) reel += "<i>" + d + "</i>";
-      // arranca en 0 y rueda hasta el dígito final
-      return '<span class="odo__d"><span class="odo__r" style="--k:' + i +
-             '" data-target="' + ch + '">' + reel + "</span></span>";
-    }).join("");
-  }
-  function rollOdometer(host) {
-    $$(".odo__r", host).forEach(function (reel) {
-      var d = +reel.getAttribute("data-target");
-      reel.style.transform = "translateY(-" + d + "em)";
-    });
   }
 
   /* ---- Acordeón ---------------------------------------------------------- */
@@ -1014,7 +988,6 @@
     mountMosaico("#mosaico", ["casa-lp", "legion", "cerro-mar", "ila-studio"]);
     PROY.init();
     CATALOGO.init();
-    $$("[data-odo]").forEach(buildOdometer);
     accordions();
     motion();
 

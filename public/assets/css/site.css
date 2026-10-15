@@ -138,6 +138,9 @@ h1,h2,h3,h4,p,figure{margin:0}
 .wrap--narrow{max-width:1080px}
 .section{padding-block:var(--sec)}
 .section--tight{padding-block:clamp(3rem,6vw,5.5rem)}
+/* En escritorio, 11vw llegaba a 160 px por lado: entre dos secciones quedaban
+   más de 300 px en blanco. El móvil conserva el ritmo original. */
+@media (min-width:900px){:root{--sec:clamp(4rem,5vw,5.5rem)}}
 
 .dark{background:var(--ink);color:var(--tx-light)}
 .dark .lead{color:var(--tx-light-2)}
@@ -888,21 +891,6 @@ h1,h2,h3,h4,p,figure{margin:0}
 .motionbtn[aria-pressed="true"] i{background:var(--plum-2)}
 .motionbtn[aria-pressed="true"] i::after{transform:translateX(13px)}
 
-/* ---------- 22. Contador de dígitos rodantes (patrón Habitline) --------- */
-.counter{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,220px),1fr));gap:1px;background:var(--hair-dark)}
-.cstat{background:var(--ink);padding:clamp(1.8rem,3.4vw,3rem) clamp(1.2rem,2vw,2rem)}
-.cstat__v{display:flex;align-items:baseline;color:#fff;
-  font-family:var(--f-display);font-weight:700;letter-spacing:-.05em;line-height:1;
-  font-size:clamp(2.6rem,5.4vw,4.6rem)}
-.cstat__lbl{display:block;margin-top:1rem;font-family:var(--f-mono);font-size:.62rem;
-  letter-spacing:.2em;text-transform:uppercase;color:var(--tx-light-2);line-height:1.5}
-.odo{display:inline-flex}
-.odo__d{display:block;height:1em;overflow:hidden}
-.odo__r{display:block;transform:translateY(0);transition:transform 1.7s var(--mo-ease);
-  transition-delay:calc(var(--k,0) * 60ms)}
-.odo__r i{display:block;height:1em;font-style:normal;font-variant-numeric:tabular-nums}
-.odo__fix{display:block;height:1em}
-
 /* ---------- 23. Acordeón de preguntas ----------------------------------- */
 .acc{border-top:1px solid var(--hair-light)}
 .dark .acc{border-top-color:var(--hair-dark)}
@@ -1075,11 +1063,6 @@ body{background:var(--paper-2)}
 .svc{border-radius:var(--radius-lg);box-shadow:var(--sh-1);background:var(--paper)}
 .svc:hover{background:var(--paper);box-shadow:var(--sh-2)}
 
-.counter{gap:clamp(.7rem,1.2vw,1.1rem);background:none}
-.cstat{background:var(--paper);border-radius:var(--radius-lg);box-shadow:var(--sh-1);text-align:center}
-.cstat__v{color:var(--plum);justify-content:center}
-.cstat__lbl{color:var(--tx-mid)}
-
 .stats{gap:clamp(.7rem,1.2vw,1.1rem);background:none}
 .stat{background:var(--paper);border-radius:var(--radius-lg);box-shadow:var(--sh-1);text-align:center}
 .stat b{color:var(--plum)}
@@ -1152,7 +1135,7 @@ body{background:var(--paper-2)}
    ========================================================================= */
 
 .chip,.filters__lbl,.filters__count,.filters__clear,.badge,.tagline,
-.nav a,.btn,.selbtn,.linkline,.pcard__cat,.cstat__lbl,.stat span,
+.nav a,.btn,.selbtn,.linkline,.pcard__cat,.stat span,
 .cat__count,.cat__n,.pillar__n,.rev__who span,.prow__meta,.mtile__cap span,
 .field label,.acc__q,.hero__meta span,.hero__scroll,.ftr h4,.ftr__bot,
 .drawer__hd h2,.dt__h4,.tag,.sw span,.sel__item small,.figure figcaption,
@@ -1180,7 +1163,7 @@ body{background:var(--paper-2)}
 .pcard__cat{font-size:.75rem;font-weight:600}
 .pcard h3{font-size:1.05rem}
 .pcard p{font-size:.88rem}
-.cstat__lbl,.stat span{font-size:.86rem;line-height:1.45}
+.stat span{font-size:.86rem;line-height:1.45}
 .cat__count{font-size:.82rem;font-weight:500}
 .cat__n,.pillar__n{font-size:.8rem;font-weight:600;letter-spacing:.02em}
 .rev__who span,.sel__item small{font-size:.78rem}
@@ -1203,10 +1186,10 @@ body{background:var(--paper-2)}
 .empty b{font-size:1.6rem}
 
 /* La mono se queda solo donde aporta: SKU y ficha técnica */
-.dt__sku,.spec dt,.odo,.cstat__v,.stat b{font-family:var(--f-mono)}
+.dt__sku,.spec dt,.stat b{font-family:var(--f-mono)}
 .dt__sku{font-size:.78rem;letter-spacing:.04em;text-transform:none}
 .spec dt{font-size:.78rem;letter-spacing:.02em;text-transform:none}
-.cstat__v,.stat b{font-family:var(--f-display)}
+.stat b{font-family:var(--f-display)}
 
 /* =========================================================================
    26b. VARIANTES DE PRODUCTO — un artículo, varios modelos

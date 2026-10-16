@@ -193,7 +193,6 @@ manteniendo la identidad visual de ALTESA (oscuro + magenta + línea de luz).
 | Nav de pastillas flotantes (marca · enlaces · acción), se oculta al bajar y vuelve al subir | `.pill`, `.hdr` |
 | Anatomía de sección: pastilla eyebrow → titular → contenido | `.tagline` |
 | Entrada fade + rise escalonada al entrar en viewport | `[data-mo]`, `[data-mo-group]` |
-| Contador de dígitos rodantes | `.counter`, `[data-odo]` |
 | Acordeón de preguntas | `.acc`, `[data-solo]` |
 | Tarjetas de reseña | `.revs` |
 | CTA fotográfico a sangre | `.cta--photo` |

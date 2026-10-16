@@ -32,7 +32,6 @@ Actualizado tras colocar las 18 fotos de la primera y segunda tanda.
 | Profesionales | «Sumarse al programa» | ✅ Técnico en showroom |
 | Contacto | «Hablemos» | ✅ Unidad móvil rotulada |
 | Inicio | «Todo se decide antes de la primera pared» | ⬜ Falta: planos sobre mesa, reunión con arquitecto |
-| Inicio | «Trayectoria que se puede verificar» | ⬜ Falta: ambiente amplio horizontal para fondo |
 | Servicios | «Seis servicios» | ⬜ Falta: una foto por servicio |
 | Profesionales | «Tres niveles para desarrollos» | ⬜ Falta: tres ambientes de distinto acabado |
 

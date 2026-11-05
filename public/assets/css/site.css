@@ -1356,3 +1356,9 @@ body{background:var(--paper-2)}
 .center{text-align:center;justify-items:center}
 .hide-sm{display:initial}
 @media (max-width:720px){.hide-sm{display:none}}
+
+/* ---------- 30. Titulares de frase completa ------------------------------
+   La portada y el cierre de inicio llevan una oración entera, no un eslogan
+   de tres palabras: se les da más ancho y un cuerpo algo menor. */
+.hero h1.h-long{max-width:22ch;font-size:clamp(2.2rem,5.4vw,4.7rem);line-height:1.06}
+.cta h2.h-long{max-width:22ch}
